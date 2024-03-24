@@ -77,7 +77,7 @@ class AuthService {
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           navigator.pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => HomeScreen(),
             ),
             (route) => false,
           );
@@ -114,7 +114,10 @@ class AuthService {
       if (response == true) {
         http.Response userRes = await http.get(
           Uri.parse('${Constants.uri}/'),
-          headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8', 'x-auth-token': token},
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
         );
 
         userProvider.setUser(userRes.body);

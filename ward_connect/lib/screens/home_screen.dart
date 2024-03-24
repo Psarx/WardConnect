@@ -1,44 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:ward_connect/providers/user_provider.dart';
-import 'package:ward_connect/services/auth_services.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  void signOutUser(BuildContext context) {
-    AuthService().signOut(context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
-
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(user.id),
-          Text(user.email),
-          Text(user.name),
-          ElevatedButton(
-            onPressed: () => signOutUser(context),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-              textStyle: MaterialStateProperty.all(
-                const TextStyle(color: Colors.white),
-              ),
-              minimumSize: MaterialStateProperty.all(
-                Size(MediaQuery.of(context).size.width / 2.5, 50),
-              ),
-            ),
-            child: const Text(
-              "log out",
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _header(context),
+              _btn(context),
+              // _drwr(context),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
+}
+
+Widget _header(BuildContext context) {
+  // ignore: prefer_const_constructors
+  return Column(
+    // ignore: prefer_const_literals_to_create_immutables
+    children: [
+      const Text(
+        "User",
+        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+      ),
+      //const Text("Enter your credentials to login: "),
+    ],
+  );
+}
+
+Widget _btn(BuildContext context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      const SizedBox(height: 20),
+      ElevatedButton(
+        onPressed: () {},
+        // ignore: sort_child_properties_last
+
+        child: const Text(
+          "Schemes",
+          style: TextStyle(fontSize: 20),
+        ),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+        ),
+      ),
+      const SizedBox(height: 20),
+      ElevatedButton(
+        onPressed: () {},
+        // ignore: sort_child_properties_last
+
+        child: const Text(
+          "Testimony Certificates",
+          style: TextStyle(fontSize: 20),
+        ),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+        ),
+      ),
+    ],
+  );
 }
