@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             child: const Text(
-              "Sign Out",
+              "log out",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),

@@ -4,7 +4,8 @@ const User = require("../models/user");
 const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
-authRouter.post("/api/signin",async (req,res)=>{
+
+authRouter.post("/api/signin",async (req,res)=>{ 
   try{
       const {email,password}=req.body;
       const user=await User.findOne({email:email});
@@ -29,7 +30,7 @@ authRouter.post("/api/signup",async (req,res)=>{
           return res.status(400).json({message:"User already exists"});
       }
       const salt = await bcrypt.genSalt(Number(process.env.SALT));
-      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);//hashing
       const user=new User({name,email,password:hashedPassword});
       const userdetails = await user.save();
       res.json(userdetails);
@@ -38,6 +39,7 @@ authRouter.post("/api/signup",async (req,res)=>{
   }
 }
 );
+//jwt token 
 authRouter.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");

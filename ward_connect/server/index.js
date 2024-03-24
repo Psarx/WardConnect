@@ -13,12 +13,13 @@ app.use(express.json());
 app.use(authRouter);
 
 const DB = process.env.DB;
+//mongo db connection 16-21
 mongoose.connect(DB).then(() => {
   console.log('DB connection successful');
 }).catch(err => {
   console.error('DB connection failed:', err);
 });
-
+// opening expreesjs
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
