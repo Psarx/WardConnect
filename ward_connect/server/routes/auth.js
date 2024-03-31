@@ -4,6 +4,7 @@ const User = require("../models/user");
 const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
+const Complaint = require("../models/complaint");
 
 authRouter.post("/api/signin",async (req,res)=>{ 
   try{
@@ -22,23 +23,35 @@ authRouter.post("/api/signin",async (req,res)=>{
       res.status(500).json({message:err.message});
   }
 });
-authRouter.post("/api/signup",async (req,res)=>{
-  try{
-      const {name,email,password}=req.body;
-      const existingUser=await User.findOne({email});
-      if(existingUser){
-          return res.status(400).json({message:"User already exists"});
-      }
-      const salt = await bcrypt.genSalt(Number(process.env.SALT));
-      const hashedPassword = await bcrypt.hash(req.body.password, salt);//hashing
-      const user=new User({name,email,password:hashedPassword});
-      const userdetails = await user.save();
-      res.json(userdetails);
+
+authRouter.post("/api/complaint",async (req,res)=>{
+  try {
+    const {name,phone,complaint} = req.body;
+    const newComplaint=new Complaint({name,phone,complaint});
+    const complaintdetails = await newComplaint.save();
+    res.json(complaintdetails);
   }catch(err){
-      res.status(500).json({message:err.message});
+    res.status(500).json({message:err.message});
   }
-}
-);
+})
+// authRouter.post("/api/signup",async (req,res)=>{
+//   try{
+//       const {name,email,password}=req.body;
+//       const existingUser=await User.findOne({email});
+//       if(existingUser){
+//           return res.status(400).json({message:"User already exists"});
+//       }
+//       const salt = await bcrypt.genSalt(Number(process.env.SALT));
+//       const hashedPassword = await bcrypt.hash(req.body.password, salt);//hashing
+//       const user=new User({name,email,password:hashedPassword});
+//       const userdetails = await user.save();
+//       res.json(userdetails);
+//   }catch(err){
+//       res.status(500).json({message:err.message});
+//   }
+// }
+// );
+
 //jwt token 
 authRouter.post("/tokenIsValid", async (req, res) => {
   try {
