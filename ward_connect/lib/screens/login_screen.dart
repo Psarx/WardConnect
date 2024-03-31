@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/services/auth_services.dart';
 
 void main() {
   runApp(LoginScreen());
@@ -15,6 +16,14 @@ class _LoginPageState extends State<LoginScreen> {
   // Text editing controllers for username and password
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService authService = AuthService();
+  void loginUser() {
+    authService.signInUser(
+      context: context,
+      email: _usernameController.text,
+      password: _passwordController.text,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
