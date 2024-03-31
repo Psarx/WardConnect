@@ -25,49 +25,61 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Login",
-            style: TextStyle(fontSize: 30),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue.shade100, Colors.blue.shade200],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomTextField(
-              controller: emailController,
-              hintText: 'Enter your email',
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            
-            child: CustomTextField(
-              controller: passwordController,
-              hintText: 'Enter your password',
-              isPassword: true,
-            ),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: loginUser,
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-              textStyle: MaterialStateProperty.all(
-                const TextStyle(color: Colors.white),
-              ),
-              minimumSize: MaterialStateProperty.all(
-                Size(MediaQuery.of(context).size.width / 2.5, 50),
-              ),
-            ),
-            child: const Text(
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
               "Login",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(fontSize: 30, color: Colors.white),
             ),
-          ),
-        ],
+            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: CustomTextField(
+                controller: emailController,
+                hintText: 'Enter your email',
+                backgroundColor:
+                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: CustomTextField(
+                controller: passwordController,
+                hintText: 'Enter your password',
+                isPassword: true,
+                backgroundColor:
+                    const Color.fromARGB(255, 230, 187, 187).withOpacity(0.8),
+              ),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: loginUser,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue),
+                textStyle: MaterialStateProperty.all(
+                  const TextStyle(color: Colors.white),
+                ),
+                minimumSize: MaterialStateProperty.all(
+                  Size(MediaQuery.of(context).size.width / 2.5, 50),
+                ),
+              ),
+              child: const Text(
+                "Login",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
