@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   void signUpUser({
     required BuildContext context,
-    required String email,
+    required String username,
     required String password,
     required String name,
   }) async {
@@ -23,7 +23,7 @@ class AuthService {
         id: '',
         name: name,
         password: password,
-        email: email,
+        email: username,
         token: '',
       );
 
@@ -52,7 +52,7 @@ class AuthService {
 
   void signInUser({
     required BuildContext context,
-    required String email,
+    required String username,
     required String password,
   }) async {
     try {
@@ -61,7 +61,7 @@ class AuthService {
       http.Response res = await http.post(
         Uri.parse('${Constants.uri}/api/signin'),
         body: jsonEncode({
-          'email': email,
+          'username': username,
           'password': password,
         }),
         headers: <String, String>{

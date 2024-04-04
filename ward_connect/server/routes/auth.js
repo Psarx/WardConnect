@@ -6,24 +6,31 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const Complaint = require("../models/complaint");
 
-authRouter.post("/api/signin",async (req,res)=>{ 
-  try{
-      const {email,password}=req.body;
-      const user=await User.findOne({email:email});
-      if(!user){
-          return res.status(400).json({message:"User not found"});
-      }
-      const isMatch=await bcrypt.compare(password,user.password);
-      if(!isMatch){
-          return res.status(400).json({message:"Invalid credentials"});
-      }
-  const token=jwt.sign({id:user._id},process.env.JWT_SECRET);
-  res.json({token,...user._doc});
-  }catch(err){
-      res.status(500).json({message:err.message});
+authRouter.post("/api/signin", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Validate username format
+    if (!/^USER|WUSER/.test(username)) {
+      return res.status(400).json({ message: "Invalid username format" });
+    }
+
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    if (password !== user.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    res.json({ token, ...user._doc });
+  }
+   catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
-
 authRouter.post("/api/complaint",async (req,res)=>{
   try {
     const {name,phone,complaint} = req.body;
