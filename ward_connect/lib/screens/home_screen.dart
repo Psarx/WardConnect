@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart'; // Import for carousel
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ward_connect/screens/certificate_testi.dart'; // Import for carousel
 
 void main() {
   runApp(HomeScreen());
@@ -103,8 +104,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: Text('Testimony Certificate'),
               onTap: () {
-                // Handle navigation to Complaints & Enquiry page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CertificateOfTestimony()),
+                );
               },
             ),
           ],
