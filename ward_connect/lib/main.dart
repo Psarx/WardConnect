@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ward_connect/providers/user_provider.dart';
 import 'package:ward_connect/screens/home_screen.dart';
-import 'package:ward_connect/screens/signup_screen.dart';
+import 'package:ward_connect/screens/login_screen.dart';
 import 'package:ward_connect/services/auth_services.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Provider.of<UserProvider>(context).user.token.isEmpty
-          ? const SignupScreen()
+          ? LoginScreen()
           : HomeScreen(),
     );
   }

@@ -68,6 +68,7 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      print('Sign In Response: ${res.statusCode} ${res.body}');
       httpErrorHandle(
         response: res,
         context: context,
@@ -75,6 +76,7 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           userProvider.setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          print('Token stored: ${jsonDecode(res.body)['token']}');
           navigator.pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => HomeScreen(),

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ward_connect/services/auth_services.dart';
 
-void main() {
-  runApp(LoginScreen());
-}
-
 class LoginScreen extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginScreen> {
@@ -33,7 +29,7 @@ class _LoginPageState extends State<LoginScreen> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                  'asssets/17306.jpg'), // Replace with your image path
+                  'assets/17306.jpg'), // Replace with your image path
               fit: BoxFit.cover, // Adjust the fit as needed
             ),
           ),
@@ -87,13 +83,7 @@ class _LoginPageState extends State<LoginScreen> {
 
                 // Sign In Button
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Handle login logic here (e.g., call an API)
-                      print('Username: ${_usernameController.text}');
-                      print('Password: ${_passwordController.text}');
-                    }
-                  },
+                  onPressed: loginUser,
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
