@@ -1,84 +1,104 @@
 import 'package:flutter/material.dart';
-import 'package:ward_connect/custom_textfield.dart';
 import 'package:ward_connect/services/auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final AuthService authService = AuthService();
+class _LoginPageState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
 
+  // Text editing controllers for username and password
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AuthService authService = AuthService();
   void loginUser() {
     authService.signInUser(
       context: context,
-      email: emailController.text,
-      password: passwordController.text,
+      email: _usernameController.text,
+      password: _passwordController.text,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade100, Colors.blue.shade200],
+    return MaterialApp(
+      home: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                  'assets/17306.jpg'), // Replace with your image path
+              fit: BoxFit.cover, // Adjust the fit as needed
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Login",
-              style: TextStyle(fontSize: 30, color: Colors.white),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomTextField(
-                controller: emailController,
-                hintText: 'Enter your email',
-                backgroundColor:
-                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomTextField(
-                controller: passwordController,
-                hintText: 'Enter your password',
-                isPassword: true,
-                backgroundColor:
-                    const Color.fromARGB(255, 230, 187, 187).withOpacity(0.8),
-              ),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: loginUser,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue),
-                textStyle: MaterialStateProperty.all(
-                  const TextStyle(color: Colors.white),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 150.0),
+                // Hello Sign In Text
+                Container(
+                  color: const Color.fromARGB(93, 255, 255, 255),
+                  child: Text(
+                    'Hello, Sign in!',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                    ),
+                  ),
                 ),
-                minimumSize: MaterialStateProperty.all(
-                  Size(MediaQuery.of(context).size.width / 2.5, 50),
+
+                // Username Text Field
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username.';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              child: const Text(
-                "Login",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
+                SizedBox(height: 10.0),
+
+                // Password Text Field
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true, // Hide password characters
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password.';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20.0),
+
+                // Sign In Button
+                ElevatedButton(
+                  onPressed: loginUser,
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      // If the button is pressed, return green, otherwise blue
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.green;
+                      }
+                      return Colors.blue;
+                    }),
+                  ),
+                  child: Text('Sign in'),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
