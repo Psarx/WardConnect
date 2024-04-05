@@ -32,18 +32,16 @@ const userSchema = mongoose.Schema({
     type: Number,
     trim: true
   },
-  email: {
-    required: true,
+  username: {
     type: String,
-    trim: true,
+    required: true,
+    unique: true,
     validate: {
-      validator: (value) => {
-        const re =
-          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        return value.match(re);
+      validator: function(value) {
+        return /^(USER|WUSER)/.test(value);
       },
-      message: "Please enter a valid email address",
-    },
+      message: props => `${props.value} is not a valid user. Must start with USER or WUSER!`
+    }
   },
   phone: {
     required: true,

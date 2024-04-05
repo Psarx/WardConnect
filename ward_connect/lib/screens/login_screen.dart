@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginScreen> {
   void loginUser() {
     authService.signInUser(
       context: context,
-      email: _usernameController.text,
+      username: _usernameController.text,
       password: _passwordController.text,
     );
   }
