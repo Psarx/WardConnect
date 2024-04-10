@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import 'package:ward_connect/screens/profile.dart';
 import 'package:ward_connect/screens/Scheme_page.dart';
 import 'package:ward_connect/screens/certificate_testi.dart';
 import 'package:ward_connect/screens/login_screen.dart'; // Import for carousel
+
 
 void main() {
   runApp(HomeScreen());
@@ -107,6 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 // Handle navigation to My Profile page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileUI()),
+                );
               },
             ),
             // Add more ListTile widgets for other drawer items

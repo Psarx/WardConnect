@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CertificateOfTestimony extends StatelessWidget {
+class complaint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +23,7 @@ class CertificateOfTestimony extends StatelessWidget {
                 children: [
                   // UI elements placed on top of the background image
                   Text(
-                    'Certificate Of Testimony',
+                    'Mention Your Complaints',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class CertificateOfTestimony extends StatelessWidget {
                   SizedBox(height: 16.0),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: 'Reason for Application',
+                      labelText: 'Write down the complaint',
                     ),
                   ),
                   SizedBox(height: 16.0),
