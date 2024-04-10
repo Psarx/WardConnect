@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ward_connect/screens/Scheme_page.dart';
-import 'package:ward_connect/screens/certificate_testi.dart'; // Import for carousel
+import 'package:ward_connect/screens/certificate_testi.dart';
+import 'package:ward_connect/screens/login_screen.dart'; // Import for carousel
 
 void main() {
   runApp(HomeScreen());
@@ -45,6 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void logout() {
+    // Implement logout functionality here
+    // For example, you can clear user session, remove tokens, etc.
+    // After logout, navigate to the sign-in page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(color: Colors.white),
             ),
             TextButton(
-              onPressed: () {
-                // Handle logout button press
-              },
+              onPressed:
+                  logout, // Call logout method when the button is pressed
               child: Text(
                 'Logout',
                 style: TextStyle(color: Colors.white),
@@ -99,6 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context); // Close drawer
               },
             ),
+            // Add more ListTile widgets for other drawer items
+            // ...
             ListTile(
               title: Text('Application Status'),
               onTap: () {
@@ -145,8 +157,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: Text('Log Out'),
               onTap: () {
-                // Handle navigation to Complaints & Enquiry page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
             ),
           ],
@@ -255,4 +270,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-//
+
+class SignInPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Build your sign-in page UI here
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign In'),
+      ),
+      body: Center(
+        child: Text('Sign In Page'),
+      ),
+    );
+  }
+}
