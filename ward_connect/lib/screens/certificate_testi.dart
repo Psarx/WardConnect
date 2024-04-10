@@ -1,65 +1,106 @@
+import 'dart:ui'; // Import this for AssetImage
+
 import 'package:flutter/material.dart';
+import 'package:ward_connect/services/auth_services.dart';
 
 class CertificateOfTestimony extends StatelessWidget {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController reasonController = TextEditingController();
+
+  final AuthService authService = AuthService();
+
+  void applyForCertificate(BuildContext context) {
+    authService.applyForCertificate(
+      context: context,
+      appliname: usernameController.text,
+      phone: phoneController.text,
+      details: reasonController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Stack(
-          // Use Stack to position background image
-          children: [
-            // Background image (adjust path and BoxFit as needed)
-            Image.asset(
-              'assets/waves.jpg', // Replace with your image path
-              fit: BoxFit.cover, // Adjust (cover, fill, etc.)
-              width: double.infinity,
-              height: double.infinity,
-            ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // UI elements placed on top of the background image
-                  Text(
-                    'Certificate Of Testimony',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Reason for Application',
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Apply'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // Set button color to blue
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/waves.jpg'), // Replace 'background_image.jpg' with your actual image file
+                fit: BoxFit.cover,
               ),
             ),
-          ],
-        ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                  sigmaX: 5,
+                  sigmaY:
+                      5), // Optional: Add blur effect to the background image
+              child: Container(
+                color: Colors.black.withOpacity(
+                    0.5), // Optional: Add opacity to the background image
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Certificate Of Testimony',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Optional: Change text color
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    fillColor:
+                        Colors.white, // Optional: Change text field color
+                    filled: true,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                TextField(
+                  controller: phoneController,
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    fillColor:
+                        Colors.white, // Optional: Change text field color
+                    filled: true,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                TextField(
+                  controller: reasonController,
+                  decoration: InputDecoration(
+                    labelText: 'Reason for Application',
+                    fillColor:
+                        Colors.white, // Optional: Change text field color
+                    filled: true,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    applyForCertificate(context);
+                  },
+                  child: Text('Apply'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

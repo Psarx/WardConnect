@@ -5,6 +5,8 @@ const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const Complaint = require("../models/complaint");
+const cert_of_testimony= require("../models/cert_of_testimony");
+
 
 authRouter.post("/api/signin", async (req, res) => {
   try {
@@ -37,6 +39,17 @@ authRouter.post("/api/complaint",async (req,res)=>{
     const newComplaint=new Complaint({name,phone,complaint});
     const complaintdetails = await newComplaint.save();
     res.json(complaintdetails);
+  }catch(err){
+    res.status(500).json({message:err.message});
+  }
+})
+
+authRouter.post("/api/certificate",async (req,res)=>{
+  try {
+    const {appliname,phone,details} = req.body;
+    const newCertificate=new cert_of_testimony({appliname,phone,details});
+    const certificate = await newCertificate.save();
+    res.json(certificate);
   }catch(err){
     res.status(500).json({message:err.message});
   }
