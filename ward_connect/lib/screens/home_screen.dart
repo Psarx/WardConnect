@@ -51,7 +51,25 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.transparent, // Ensure background image visibility
 
       appBar: AppBar(
-        title: Text('e-WARD'),
+        backgroundColor: Colors.blue, // Change the color of the task bar
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'e-WARD',
+              style: TextStyle(color: Colors.white),
+            ),
+            TextButton(
+              onPressed: () {
+                // Handle logout button press
+              },
+              child: Text(
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () => scaffoldKey.currentState!.openDrawer(),
@@ -112,6 +130,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            ListTile(
+              title: Text('All Schemes'),
+              onTap: () {
+                // Handle navigation to Complaints & Enquiry page (replace with your implementation)
+                Navigator.pop(context); // Close drawer
+              },
+            ),
+            ListTile(
+              title: Text('Log Out'),
+              onTap: () {
+                // Handle navigation to Complaints & Enquiry page (replace with your implementation)
+                Navigator.pop(context); // Close drawer
+              },
+            ),
           ],
         ),
       ),
@@ -166,51 +198,49 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SizedBox(height: 30.0),
 
-                // Row for dummy text components (full width)
-                Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceEvenly, // Distribute evenly
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Schemes',
-                        style: TextStyle(
-                          color: Colors.white, // Add color to the text
+                // Scrollable list of schemes
+                Expanded(
+                  child: ListView(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme 1
+                        },
+                        child: Text(
+                          'Scheme 1',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 40.0,
-                          vertical: 20.0,
-                        ),
-                        // Change primary to background
-                        backgroundColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    /*ElevatedButton(
-                     onPressed: () {},
-                      child: Text(
-                        'Testimony Certificate',
-                        style: TextStyle(
-                          color: Colors.white, // Add color to the text
+                      TextButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme 2
+                        },
+                        child: Text(
+                          'Scheme 2',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 20.0),
-                        // Change primary to background
-                        backgroundColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      TextButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme 3
+                        },
+                        child: Text(
+                          'Scheme 3',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                    ),*/
-                  ],
+                      // Add more buttons for other schemes
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -220,3 +250,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+//
