@@ -40,7 +40,23 @@ authRouter.post("/api/complaint",async (req,res)=>{
   }catch(err){
     res.status(500).json({message:err.message});
   }
+});
+
+app.get('/form',(req,res)=>{
+  res.send_File(__dirname+'/form.html')
 })
+
+app.post('/form', async (req, res) => {
+  try {
+    const memberData = req.body; // Data sent from the client
+    const newMember = new Member(memberData); // Create a new Member document
+    await newMember.save(); // Save the new member to the database
+    res.status(201).json(newMember); // Send the new member as JSON response
+  } catch (err) {
+    console.error('Failed to store member data', err);
+    res.status(500).json({ error: 'Failed to store member data' }); // Send error response
+  }
+});
 // authRouter.post("/api/signup",async (req,res)=>{
 //   try{
 //       const {name,email,password}=req.body;
