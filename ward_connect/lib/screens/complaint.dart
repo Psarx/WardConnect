@@ -1,18 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/models/complaints.dart'
+    as ComplaintModel; // Alias the import
+import 'package:ward_connect/services/auth_services.dart';
 
-class Complaint extends StatelessWidget {
+class ComplaintScreen extends StatefulWidget {
+  // Renaming the class to avoid conflict
+  @override
+  _ComplaintScreenState createState() => _ComplaintScreenState();
+}
+
+class _ComplaintScreenState extends State<ComplaintScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _complaintController = TextEditingController();
+  final AuthService _authService = AuthService();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _complaintController.dispose();
+    super.dispose();
+  }
+
+  void _registerComplaint(BuildContext context) {
+    _authService.registerComplaint(
+      context: context,
+      name: _nameController.text,
+      phone: _phoneController.text,
+      complaintText: _complaintController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
-          // Use Stack to position background image
           children: [
-            // Background image (adjust path and BoxFit as needed)
             Image.asset(
-              'assets/waves.jpg', // Replace with your image path
-              fit: BoxFit.cover, // Adjust (cover, fill, etc.)
+              'assets/waves.jpg',
+              fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
             ),
@@ -21,7 +50,6 @@ class Complaint extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // UI elements placed on top of the background image
                   Text(
                     'Mention Your Complaints',
                     style: TextStyle(
@@ -30,29 +58,34 @@ class Complaint extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
+                    controller: _nameController,
                     decoration: InputDecoration(
                       labelText: 'Username',
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
+                    controller: _phoneController,
                     decoration: InputDecoration(
                       labelText: 'Phone Number',
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
+                    controller: _complaintController,
                     decoration: InputDecoration(
                       labelText: 'Write down the complaint',
                     ),
                   ),
                   SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _registerComplaint(context);
+                    },
                     child: Text('Apply'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // Set button color to blue
+                      backgroundColor: Colors.blue,
                     ),
                   ),
                 ],

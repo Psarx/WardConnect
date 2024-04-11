@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ward_connect/models/complaints.dart' as ComplaintModel;
 import 'package:ward_connect/models/user.dart';
 import 'package:ward_connect/models/cot.dart';
 import 'package:ward_connect/providers/user_provider.dart';
+import 'package:ward_connect/screens/complaint.dart';
 import 'package:ward_connect/screens/home_screen.dart';
 import 'package:ward_connect/screens/signup_screen.dart';
 import 'package:ward_connect/screens/certificate_testi.dart';
@@ -170,6 +172,42 @@ class AuthService {
           showSnackBar(
             context,
             'Request Submitted',
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void registerComplaint({
+    required BuildContext context,
+    required String name,
+    required String phone,
+    required String complaintText,
+  }) async {
+    try {
+      ComplaintModel.Complaints complaint = ComplaintModel.Complaints(
+        name: name,
+        phone: phone,
+        complaint: complaintText,
+      );
+
+      http.Response res = await http.post(
+        Uri.parse('${Constants.uri}/api/complaint'),
+        body: complaint.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Complaint Submitted',
           );
         },
       );
