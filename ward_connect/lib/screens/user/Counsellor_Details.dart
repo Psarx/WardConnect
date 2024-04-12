@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ward_connect/screens/home_screen.dart';
+import 'package:ward_connect/screens/user/home_screen.dart';
 
 void main() {
   runApp(Directionality(

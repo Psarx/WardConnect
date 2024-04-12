@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ward_connect/screens/complaint.dart';
+import 'package:ward_connect/screens/user/complaint.dart';
 
-import 'package:ward_connect/screens/profile.dart';
-import 'package:ward_connect/screens/Scheme_page.dart';
-import 'package:ward_connect/screens/certificate_testi.dart';
-import 'package:ward_connect/screens/login_screen.dart';
-import 'package:ward_connect/screens/Counsellor_Details.dart'; // Import for carousel
+import 'package:ward_connect/screens/user/profile.dart';
+import 'package:ward_connect/screens/user/Scheme_page.dart';
+import 'package:ward_connect/screens/user/certificate_testi.dart';
+import 'package:ward_connect/screens/user/login_screen.dart';
+import 'package:ward_connect/screens/user/Counsellor_Details.dart'; // Import for carousel
 
 void main() {
   runApp(HomeScreen());

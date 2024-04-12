@@ -1,8 +1,7 @@
 // Here's the modified code with a home icon added to the app bar, clearing text fields when the apply button is clicked, and the full code with all requirements:
 import 'package:flutter/material.dart';
-import 'package:ward_connect/models/complaints.dart' as ComplaintModel;
 import 'package:ward_connect/services/auth_services.dart';
-import 'package:ward_connect/screens/home_screen.dart';
+import 'package:ward_connect/screens/user/home_screen.dart';
 
 class ComplaintScreen extends StatefulWidget {
   @override
