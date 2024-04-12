@@ -1,10 +1,10 @@
+// Here's the modified code with a home icon added to the app bar, clearing text fields when the apply button is clicked, and the full code with all requirements:
 import 'package:flutter/material.dart';
-import 'package:ward_connect/models/complaints.dart'
-    as ComplaintModel; // Alias the import
+import 'package:ward_connect/models/complaints.dart' as ComplaintModel;
 import 'package:ward_connect/services/auth_services.dart';
+import 'package:ward_connect/screens/home_screen.dart';
 
 class ComplaintScreen extends StatefulWidget {
-  // Renaming the class to avoid conflict
   @override
   _ComplaintScreenState createState() => _ComplaintScreenState();
 }
@@ -30,6 +30,11 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       phone: _phoneController.text,
       complaintText: _complaintController.text,
     );
+
+    // Clear text fields
+    _nameController.clear();
+    _phoneController.clear();
+    _complaintController.clear();
   }
 
   @override
@@ -37,6 +42,19 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text('Mention Your Complaints'),
+          leading: IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+            },
+          ),
+        ),
         body: Stack(
           children: [
             Image.asset(
@@ -50,13 +68,6 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Mention Your Complaints',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   SizedBox(height: 16.0),
                   TextFormField(
                     controller: _nameController,

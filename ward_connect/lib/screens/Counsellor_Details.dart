@@ -1,215 +1,14 @@
-/*import 'package:flutter/material.dart';
-
-void main() {
-  runApp(Directionality(
-    textDirection: TextDirection.ltr,
-    child: ProfileUI(),
-  ));
-}
-
-class ProfileUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfilePage(),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'assets/waves.jpg'), // Replace with your background image path
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: Text(
-                    'MY PROFILE',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/profile-pic.png',
-                      width: 100.0,
-                      height: 100.0,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('User id',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter user id',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Name:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Name',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Age:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Age',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Phone Number:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Phone Number',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('House Number:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter House Number',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('House Name:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter House Name',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Ration ID:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Ration ID',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Aadhaar Number:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Aadhaar Number',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Username:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Username',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-*/
 import 'package:flutter/material.dart';
 import 'package:ward_connect/screens/home_screen.dart';
 
 void main() {
   runApp(Directionality(
     textDirection: TextDirection.ltr,
-    child: ProfileUI(),
+    child: Counsellor(),
   ));
 }
 
-class ProfileUI extends StatelessWidget {
+class Counsellor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -227,7 +26,7 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          'MY PROFILE',
+          'Counsellor Details',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
@@ -261,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   child: Text(
-                    'MY PROFILE',
+                    'Counsellor Details',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
@@ -281,7 +80,7 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: 10.0),
                 Row(
                   children: <Widget>[
-                    Text('User id',
+                    Text('Counsellor id',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(width: 10.0),
                     Flexible(
@@ -367,7 +166,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0),
+                /* SizedBox(height: 10.0),
                 Row(
                   children: <Widget>[
                     Text('Ration ID:',
@@ -381,7 +180,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
+                ),*/
                 SizedBox(height: 10.0),
                 Row(
                   children: <Widget>[

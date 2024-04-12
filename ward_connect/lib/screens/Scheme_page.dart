@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/screens/home_screen.dart';
 
 void main() {
   runApp(SchemeScreen());
@@ -19,7 +20,10 @@ class SchemeScreen extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.home),
             onPressed: () {
-              // Navigate to home screen or perform any action
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              ); // Navigate to home screen or perform any action
             },
           ),
         ),
