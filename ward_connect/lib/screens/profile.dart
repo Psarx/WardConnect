@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget {
@@ -20,6 +21,13 @@ class UserProfile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                // Home Button
+                IconButton(
+                  icon: Icon(Icons.home),
+                  onPressed: () {
+                    // Implement the action you want when home button is pressed
+                  },
+                ),
                 // Text "My Profile"
                 Text(
                   "My Profile",
@@ -134,3 +142,6 @@ class UserProfile extends StatelessWidget {
   }
 }
 
+
+
+                   
