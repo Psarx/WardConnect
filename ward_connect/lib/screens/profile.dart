@@ -1,194 +1,129 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(Directionality(
-    textDirection: TextDirection.ltr,
-    child: ProfileUI(),
-  ));
-}
-
-class ProfileUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfilePage(),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
+class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'assets/waves.jpg'), // Replace with your background image path
-                fit: BoxFit.cover,
-              ),
-            ),
+          // Background image
+          Image.asset(
+            "assets/waves.jpg",
+            fit: BoxFit.fill,
+            width: double.infinity,
+            height: double.infinity,
           ),
-          SingleChildScrollView(
+
+          // Content on top of background image
+          Padding(
+            padding: EdgeInsets.all(30.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: Text(
-                    'MY PROFILE',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                // Text "My Profile"
+                Text(
+                  "My Profile",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+
+                // Profile image
+                CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: AssetImage("assets/profile-pic.png"),
+                ),
+                SizedBox(height: 20.0),
+
+                // Text fields for user information
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "User ID",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),
-                Center(
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/profile-pic.png',
-                      width: 100.0,
-                      height: 100.0,
-                      fit: BoxFit.cover,
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('User id',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter user id',
-                        ),
-                      ),
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Age",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Name:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Name',
-                        ),
-                      ),
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Phone Number",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Age:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Age',
-                        ),
-                      ),
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Ration ID",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Phone Number:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Phone Number',
-                        ),
-                      ),
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Ration Type",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('House Number:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter House Number',
-                        ),
-                      ),
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Aadhaar No",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('House Name:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter House Name',
-                        ),
-                      ),
+                SizedBox(height: 5.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Username",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Ration ID:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Ration ID',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Aadhaar Number:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Aadhaar Number',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text('Username:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10.0),
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Username',
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -198,3 +133,4 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
