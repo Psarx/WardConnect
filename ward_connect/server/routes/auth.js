@@ -5,6 +5,8 @@ const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const Complaint = require("../models/complaint");
+const cert_of_testimony= require("../models/cert_of_testimony");
+
 
 authRouter.post("/api/signin", async (req, res) => {
   try {
@@ -46,6 +48,7 @@ app.get('/form',(req,res)=>{
   res.send_File(__dirname+'/form.html')
 })
 
+
 app.post('/form', async (req, res) => {
   try {
     const memberData = req.body; // Data sent from the client
@@ -57,6 +60,18 @@ app.post('/form', async (req, res) => {
     res.status(500).json({ error: 'Failed to store member data' }); // Send error response
   }
 });
+
+authRouter.post("/api/certificate",async (req,res)=>{
+  try {
+    const {appliname,phone,details} = req.body;
+    const newCertificate=new cert_of_testimony({appliname,phone,details});
+    const certificate = await newCertificate.save();
+    res.json(certificate);
+  }catch(err){
+    res.status(500).json({message:err.message});
+  }
+})
+
 // authRouter.post("/api/signup",async (req,res)=>{
 //   try{
 //       const {name,email,password}=req.body;

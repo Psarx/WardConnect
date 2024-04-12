@@ -1,15 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ward_connect/models/complaints.dart' as ComplaintModel;
 import 'package:ward_connect/models/user.dart';
+import 'package:ward_connect/models/cot.dart';
 import 'package:ward_connect/providers/user_provider.dart';
-import 'package:ward_connect/screens/home_screen.dart';
-import 'package:ward_connect/screens/signup_screen.dart';
+import 'package:ward_connect/screens/user/complaint.dart';
+import 'package:ward_connect/screens/user/home_screen.dart';
+import 'package:ward_connect/screens/user/signup_screen.dart';
+import 'package:ward_connect/screens/user/certificate_testi.dart';
 import 'package:ward_connect/utils/constants.dart';
 import 'package:ward_connect/utils/utils.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   void signUpUser({
@@ -90,7 +94,6 @@ class AuthService {
     }
   }
 
-  // get user data
   void getUserData(
     BuildContext context,
   ) async {
@@ -139,5 +142,77 @@ class AuthService {
       ),
       (route) => false,
     );
+  }
+
+  void applyForCertificate({
+    required BuildContext context,
+    required String appliname,
+    required String phone,
+    required String details,
+  }) async {
+    try {
+      CertificateofTestimony cot = CertificateofTestimony(
+        appliname: appliname,
+        phone: phone,
+        details: details,
+      );
+
+      http.Response res = await http.post(
+        Uri.parse('${Constants.uri}/api/certificate'),
+        body: cot.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Request Submitted',
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void registerComplaint({
+    required BuildContext context,
+    required String name,
+    required String phone,
+    required String complaintText,
+  }) async {
+    try {
+      ComplaintModel.Complaints complaint = ComplaintModel.Complaints(
+        name: name,
+        phone: phone,
+        complaint: complaintText,
+      );
+
+      http.Response res = await http.post(
+        Uri.parse('${Constants.uri}/api/complaint'),
+        body: complaint.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Complaint Submitted',
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }

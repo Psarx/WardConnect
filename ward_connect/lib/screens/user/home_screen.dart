@@ -2,7 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ward_connect/screens/certificate_testi.dart'; // Import for carousel
+import 'package:ward_connect/screens/user/complaint.dart';
+
+import 'package:ward_connect/screens/user/profile.dart';
+import 'package:ward_connect/screens/user/Scheme_page.dart';
+import 'package:ward_connect/screens/user/certificate_testi.dart';
+import 'package:ward_connect/screens/user/login_screen.dart';
+import 'package:ward_connect/screens/user/Counsellor_Details.dart'; // Import for carousel
 
 void main() {
   runApp(HomeScreen());
@@ -44,6 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void logout() {
+    // Implement logout functionality here
+    // For example, you can clear user session, remove tokens, etc.
+    // After logout, navigate to the sign-in page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +67,24 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.transparent, // Ensure background image visibility
 
       appBar: AppBar(
-        title: Text('e-WARD'),
+        backgroundColor: Colors.blue, // Change the color of the task bar
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'e-WARD',
+              style: TextStyle(color: Colors.white),
+            ),
+            TextButton(
+              onPressed:
+                  logout, // Call logout method when the button is pressed
+              child: Text(
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () => scaffoldKey.currentState!.openDrawer(),
@@ -78,8 +111,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 // Handle navigation to My Profile page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileUI()),
+                );
               },
             ),
+            // Add more ListTile widgets for other drawer items
+            // ...
             ListTile(
               title: Text('Application Status'),
               onTap: () {
@@ -90,8 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: Text('Counsellor Details'),
               onTap: () {
-                // Handle navigation to Counsellor Details page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Counsellor()),
+                );
               },
             ),
             ListTile(
@@ -99,6 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 // Handle navigation to Complaints & Enquiry page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ComplaintScreen()),
+                );
               },
             ),
             ListTile(
@@ -109,6 +155,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => CertificateOfTestimony()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('All Schemes'),
+              onTap: () {
+                // Handle navigation to Complaints & Enquiry page (replace with your implementation)
+                Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SchemeScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Log Out'),
+              onTap: () {
+                Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
             ),
@@ -166,56 +233,69 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SizedBox(height: 30.0),
 
-                // Row for dummy text components (full width)
-                Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceEvenly, // Distribute evenly
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Schemes',
-                        style: TextStyle(
-                          color: Colors.white, // Add color to the text
+                // Scrollable list of schemes
+                Expanded(
+                  child: ListView(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme 1
+                        },
+                        child: Text(
+                          'Scheme 1',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 40.0,
-                          vertical: 20.0,
-                        ),
-                        // Change primary to background
-                        backgroundColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    /*ElevatedButton(
-                     onPressed: () {},
-                      child: Text(
-                        'Testimony Certificate',
-                        style: TextStyle(
-                          color: Colors.white, // Add color to the text
+                      TextButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme 2
+                        },
+                        child: Text(
+                          'Scheme 2',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 20.0),
-                        // Change primary to background
-                        backgroundColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      TextButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme 3
+                        },
+                        child: Text(
+                          'Scheme 3',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                    ),*/
-                  ],
+                      // Add more buttons for other schemes
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SignInPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Build your sign-in page UI here
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign In'),
+      ),
+      body: Center(
+        child: Text('Sign In Page'),
       ),
     );
   }

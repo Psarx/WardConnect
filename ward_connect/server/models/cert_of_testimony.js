@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const certificateSchema = mongoose.Schema({
-    appli_name:{
+    appliname:{
         required: true,
         type: String,
         trim: true,
@@ -26,5 +26,5 @@ const certificateSchema = mongoose.Schema({
 })
 
 
-const cot = mongoose.model("cert_of_testimonys", certificateSchema);
+const cert_of_testimony = mongoose.model("cert_of_testimonys", certificateSchema);
 module.exports = cert_of_testimony;
