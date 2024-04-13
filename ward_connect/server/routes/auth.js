@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const Complaint = require("../models/complaint");
 const cert_of_testimony= require("../models/cert_of_testimony");
+const personal_details = require("../models/personal_details");
 
 
 authRouter.post("/api/signin", async (req, res) => {
@@ -43,6 +44,18 @@ authRouter.post("/api/complaint",async (req,res)=>{
     res.status(500).json({message:err.message});
   }
 })
+authRouter.post('/api/person', async (req, res) => {
+  try {
+    const {username,name,phone,age,hno,hname,rid,rtype,adhar_no} = req.body; 
+    // Assuming the request body contains the data to be added
+      const newData=new personal_details({username,name,phone,age,hno,hname,rid,rtype,adhar_no});
+      const result = await newData.save(newData);
+      res.status(201).json(result);
+  } catch (error) {
+      console.error("Error adding data:", error);
+      res.status(500).json({ error: "Failed to add data" });
+  }
+});
 
 authRouter.post("/api/certificate",async (req,res)=>{
   try {
@@ -89,9 +102,24 @@ authRouter.post("/tokenIsValid", async (req, res) => {
 });
 
 // get user data
+authRouter.get('/api/personal-details/', async (req, res) => {
+  const username = req.query.username; // Access username from query parameters
+  try {
+      const user = await personal_details.findOne({ username: username }); // Assuming username is unique
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json(user);
+  } catch (error) {
+      console.error('Error fetching personal details:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({ ...user._doc, token: req.token });
 });
+
 
 module.exports = authRouter;
