@@ -8,6 +8,34 @@ const Complaint = require("../models/complaint");
 const cert_of_testimony= require("../models/cert_of_testimony");
 const personal_details = require("../models/personal_details");
 
+authRouter.post("/api/signup", async (req, res) => {
+  try {
+    const { username, password, name } = req.body;
+
+    // Validate username format
+    if (!/^USER|WUSER/.test(username)) {
+      return res.status(400).json({ message: "Invalid username format" });
+    }
+
+    // Check if the username is already taken
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: "Username already exists" });
+    }
+
+    // Create a new user record
+    const newUser = new User({
+      username,
+      password, // Note: You should hash the password before saving it in the database for security
+      name
+    });
+    await newUser.save();
+
+    res.status(201).json({ message: "User created successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 authRouter.post("/api/signin", async (req, res) => {
   try {
@@ -67,6 +95,8 @@ authRouter.post("/api/certificate",async (req,res)=>{
     res.status(500).json({message:err.message});
   }
 })
+
+
 // authRouter.post("/api/signup",async (req,res)=>{
 //   try{
 //       const {name,email,password}=req.body;
@@ -103,9 +133,11 @@ authRouter.post("/tokenIsValid", async (req, res) => {
 
 // get user data
 authRouter.get('/api/personal-details/', async (req, res) => {
-  const username = req.query.username; // Access username from query parameters
   try {
-      const user = await personal_details.findOne({ username: username }); // Assuming username is unique
+      // Assuming the username of the logged-in user is available in req.user.username
+      const username = req.query.username;
+      
+      const user = await personal_details.findOne({ username: username });
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
       }
@@ -115,6 +147,7 @@ authRouter.get('/api/personal-details/', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);

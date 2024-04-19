@@ -9,96 +9,116 @@ class LoginScreen extends StatefulWidget {
 class _LoginPageState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // Text editing controllers for username and password
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
-  void loginUser() {
-    authService.signInUser(
-      context: context,
-      username: _usernameController.text,
-      password: _passwordController.text,
-    );
+
+  bool _isLoading = false;
+  String _errorMessage = '';
+
+  Future<void> _loginUser() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+        _errorMessage = '';
+      });
+
+      try {
+        authService.signInUser(
+          context: context,
+          username: _usernameController.text,
+          password: _passwordController.text,
+        );
+      } catch (e) {
+        setState(() {
+          _errorMessage = e.toString();
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                  'assets/17306.jpg'), // Replace with your image path
-              fit: BoxFit.cover, // Adjust the fit as needed
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/17306.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 150.0),
-                // Hello Sign In Text
-                Container(
-                  color: const Color.fromARGB(93, 255, 255, 255),
-                  child: Text(
-                    'Hello, Sign in!',
-                    style: TextStyle(
-                      fontSize: 24.0,
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 150.0),
+                  Container(
+                    color: const Color.fromARGB(93, 255, 255, 255),
+                    child: Text(
+                      'Hello, Sign in!',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                      ),
                     ),
                   ),
-                ),
-
-                // Username Text Field
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your username.';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10.0),
-
-                // Password Text Field
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true, // Hide password characters
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password.';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 20.0),
-
-                // Sign In Button
-                ElevatedButton(
-                  onPressed: loginUser,
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      // If the button is pressed, return green, otherwise blue
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors.green;
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your username.';
                       }
-                      return Colors.blue;
-                    }),
+                      return null;
+                    },
                   ),
-                  child: Text('Sign in'),
-                ),
-              ],
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password.';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: _isLoading ? null : _loginUser,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) {
+                          return Colors.blue;
+                        },
+                      ),
+                    ),
+                    child: _isLoading
+                        ? CircularProgressIndicator()
+                        : Text('Sign in'),
+                  ),
+                  if (_errorMessage.isNotEmpty)
+                    Text(
+                      _errorMessage,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

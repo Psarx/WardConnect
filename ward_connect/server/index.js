@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 const cors = require('cors'); // Import the cors package
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -11,6 +13,12 @@ app.use(cors());
 
 app.use(express.json());
 app.use(authRouter);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use((req, res, next) => {
+  // Middleware logic
+  next();
+});
 
 const DB = process.env.DB;
 //mongo db connection 16-21

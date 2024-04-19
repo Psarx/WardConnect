@@ -11,7 +11,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final AuthService authService = AuthService();
@@ -19,7 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void signupUser() {
     authService.signUpUser(
       context: context,
-      username: emailController.text,
+      username: usernameController.text,
       password: passwordController.text,
       name: nameController.text,
     );
@@ -47,8 +47,8 @@ class _SignupScreenState extends State<SignupScreen> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomTextField(
-              controller: emailController,
-              hintText: 'Enter your email',
+              controller: usernameController,
+              hintText: 'Enter your username',
             ),
           ),
           const SizedBox(height: 20),

@@ -7,6 +7,7 @@ import 'package:ward_connect/models/complaints.dart' as ComplaintModel;
 import 'package:ward_connect/models/user.dart';
 import 'package:ward_connect/models/cot.dart';
 import 'package:ward_connect/providers/user_provider.dart';
+import 'package:ward_connect/screens/member/home_screen.dart';
 import 'package:ward_connect/screens/user/complaint.dart';
 import 'package:ward_connect/screens/user/home_screen.dart';
 import 'package:ward_connect/screens/user/signup_screen.dart';
@@ -23,34 +24,39 @@ class AuthService {
     required String name,
   }) async {
     try {
-      User user = User(
-        id: '',
-        name: name,
-        password: password,
-        email: username,
-        token: '',
-      );
+      // Create a User object with the provided data
+      Map<String, dynamic> userData = {
+        'name': name,
+        'username': username,
+        'password': password,
+      };
 
+      // Send a POST request to the signup endpoint
       http.Response res = await http.post(
-        Uri.parse('${Constants.uri}/api/signup'),
-        body: user.toJson(),
+        Uri.parse('${Constants.uri}/api/auth/signup'),
+        body: jsonEncode(userData),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-            context,
-            'Account created! Login with the same credentials!',
-          );
-        },
-      );
+      // Check the response status and handle accordingly
+      if (res.statusCode == 201) {
+        // Account created successfully
+        showSnackBar(
+          context,
+          'Account created! Login with the same credentials!',
+        );
+      } else {
+        // Account creation failed
+        showSnackBar(
+          context,
+          'Failed to create account. Please try again later.',
+        );
+      }
     } catch (e) {
-      showSnackBar(context, e.toString());
+      // Error occurred during signup
+      showSnackBar(context, 'Error: $e');
     }
   }
 
@@ -63,7 +69,7 @@ class AuthService {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
-        Uri.parse('${Constants.uri}/api/signin'),
+        Uri.parse('${Constants.uri}/api/auth/login'),
         body: jsonEncode({
           'username': username,
           'password': password,
@@ -73,22 +79,34 @@ class AuthService {
         },
       );
       print('Sign In Response: ${res.statusCode} ${res.body}');
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          userProvider.setUser(res.body);
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          print('Token stored: ${jsonDecode(res.body)['token']}');
+      if (res.statusCode == 200) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        userProvider.setUser(res.body);
+        await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+        print('Token stored: ${jsonDecode(res.body)['token']}');
+
+        // Check the username and redirect accordingly
+        if (username.startsWith('USER')) {
           navigator.pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => HomeScreen(),
             ),
             (route) => false,
           );
-        },
-      );
+        } else if (username.startsWith('WUSER')) {
+          navigator.pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => MemberScreen(),
+            ),
+            (route) => false,
+          );
+        } else {
+          // Handle other cases if necessary
+        }
+      } else {
+        // Handle unsuccessful sign-in
+        showSnackBar(context, 'Failed to sign in. Please try again later.');
+      }
     } catch (e) {
       showSnackBar(context, e.toString());
     }
@@ -138,7 +156,7 @@ class AuthService {
     prefs.setString('x-auth-token', '');
     navigator.pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => const SignupScreen(),
+        builder: (context) => SignupScreen(),
       ),
       (route) => false,
     );
@@ -214,5 +232,12 @@ class AuthService {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+  void showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
