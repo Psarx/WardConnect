@@ -82,7 +82,8 @@ class AuthService {
       if (res.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         userProvider.setUser(res.body);
-        await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+        await prefs.setString('Authorization', jsonDecode(res.body)['token']);
+        await prefs.setString('user', jsonDecode(res.body)['_id']);
         print('Token stored: ${jsonDecode(res.body)['token']}');
 
         // Check the username and redirect accordingly

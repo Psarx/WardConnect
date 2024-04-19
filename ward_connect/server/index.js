@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const cors = require('cors'); // Import the cors package
 const PORT = process.env.PORT || 8080;
 const app = express();
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 // Use the cors middleware
@@ -19,7 +20,8 @@ app.use((req, res, next) => {
   // Middleware logic
   next();
 });
-
+// Parse cookies
+app.use(cookieParser());
 const DB = process.env.DB;
 //mongo db connection 16-21
 mongoose.connect(DB).then(() => {

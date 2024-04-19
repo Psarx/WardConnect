@@ -425,6 +425,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ward_connect/screens/user/home_screen.dart';
+import 'package:ward_connect/screens/user/fetch_data.dart';
 
 void main() {
   runApp(Directionality(
@@ -479,6 +480,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void dispose() {
+    super.dispose();
     userIdController.dispose();
     nameController.dispose();
     ageController.dispose();
@@ -488,27 +490,24 @@ class _ProfilePageState extends State<ProfilePage> {
     rationIdController.dispose();
     aadhaarNumberController.dispose();
     usernameController.dispose();
-    super.dispose();
   }
 
   // Method to fetch user data from the API
   void fetchUserData() async {
-    final response =
-        await http.get(Uri.parse('http://localhost8080/api/user/details'));
-
+    final response = await fetchData('http://localhost:8080/api/user/details');
     if (response.statusCode == 200) {
       Map<String, dynamic> userData = json.decode(response.body);
-
+      print(userData);
       // Update controllers with fetched data
       setState(() {
-        userIdController.text = userData['userId'];
+        userIdController.text = userData['usId'];
         nameController.text = userData['name'];
         ageController.text = userData['age'].toString();
-        phoneNumberController.text = userData['phoneNumber'];
-        houseNumberController.text = userData['houseNumber'];
-        houseNameController.text = userData['houseName'];
-        rationIdController.text = userData['rationId'];
-        aadhaarNumberController.text = userData['aadhaarNumber'];
+        phoneNumberController.text = userData['phone'];
+        houseNumberController.text = userData['hno'].toString();
+        houseNameController.text = userData['hname'];
+        rationIdController.text = userData['rid'].toString();
+        aadhaarNumberController.text = userData['adhar_no'].toString();
         usernameController.text = userData['username'];
       });
     } else {

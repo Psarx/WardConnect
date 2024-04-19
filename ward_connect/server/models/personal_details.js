@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 
 const personalSchema = mongoose.Schema({
-    userId: {
+    usId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    username :{
+        required: true,
+        type: String,
+        trim: true
     },
     name: {
         required: true,
