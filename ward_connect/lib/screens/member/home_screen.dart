@@ -365,116 +365,150 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent, // Ensure background image visibility
-
       appBar: AppBar(
-        backgroundColor: Colors.blue, // Change the color of the task bar
+        backgroundColor: Colors.blue,
+        leading: Image.asset(
+          'assets/WHITE.png', // Replace 'app_logo.png' with your app logo path
+          width: 40, // Adjust width as needed
+          height: 40, // Adjust height as needed
+        ),
         title: Text(
           'e-WARD',
           style: TextStyle(color: Colors.white),
         ),
         actions: [
-          IconButton(
-            onPressed: logout, // Call logout method when the button is pressed
-            icon: Icon(Icons.logout),
+          Row(
+            children: [
+              TextButton(
+                onPressed: logout,
+                child: Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/rm222batch5-mind-25.jpg', // Change to your background image path
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              // Change to Row for horizontal arrangement
-              children: [
-                // Carousel (full width)
-                Container(
-                  width: double.infinity, // Stretch to full width
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            // // Background Image
+            // Positioned.fill(
+            //   child: Image.asset(
+            //     'assets/rm222batch5-mind-25.jpg', // Change to your background image path
+            //     fit: BoxFit.cover, // Adjusted to cover the whole body
+            //   ),
+            // ),
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                // Change to Row for horizontal arrangement
+                children: [
+                  // Carousel (full width)
+                  Container(
+                    width: double.infinity, // Stretch to full width
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: CarouselSlider(
+                        items: _imageUrls.map((imageUrl) {
+                          return Image.asset(
+                            'assets/$imageUrl', // Adjust path based on image location
+                            fit: BoxFit.cover,
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          autoPlayInterval: Duration(
+                              seconds: 2), // Change image every 2 seconds
+                          aspectRatio: 16 / 9, // Adjust aspect ratio as needed
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _currentImageIndex = index;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30.0),
+
+                  // Buttons for schemes, complaint of testimony, and complaints
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Handle navigation to Scheme Page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SchemeScreen()),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(255, 212, 209,
+                                  209)), // Background color of the button
+                          foregroundColor: MaterialStateProperty.all(
+                              Colors.blue), // Text color of the button
+                        ),
+                        child: Text('Schemes'),
+                      ),
+                      SizedBox(height: 40),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Handle navigation to Complaint of Testimony
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CertificateOfTestimony()),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(255, 212, 209,
+                                  209)), // Background color of the button
+                          foregroundColor: MaterialStateProperty.all(
+                              Colors.blue), // Text color of the button
+                        ),
+                        child: Text('Complaint of Testimony'),
+                      ),
+                      SizedBox(height: 40),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Handle navigation to Complaint Screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ComplaintScreen()),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 212, 209,
+                                  209)), // Background color of the button
+                          foregroundColor: MaterialStateProperty.all(
+                              Colors.blue), // Text color of the button
+                        ),
+                        child: Text('Complaints'),
                       ),
                     ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: CarouselSlider(
-                      items: _imageUrls.map((imageUrl) {
-                        return Image.asset(
-                          'assets/$imageUrl', // Adjust path based on image location
-                          fit: BoxFit.cover,
-                        );
-                      }).toList(),
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        autoPlayInterval: Duration(
-                            seconds: 2), // Change image every 2 seconds
-                        aspectRatio: 16 / 9, // Adjust aspect ratio as needed
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _currentImageIndex = index;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30.0),
-
-                // Buttons for schemes, complaint of testimony, and complaints
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle navigation to Scheme Page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SchemeScreen()),
-                        );
-                      },
-                      child: Text('Schemes'),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle navigation to Complaint of Testimony
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CertificateOfTestimony()),
-                        );
-                      },
-                      child: Text('Complaint of Testimony'),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle navigation to Complaint Screen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ComplaintScreen()),
-                        );
-                      },
-                      child: Text('Complaints'),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
