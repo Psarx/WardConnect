@@ -40,7 +40,7 @@ authRouter.post("/api/signup", async (req, res) => {
 authRouter.post("/api/signin", async (req, res) => {
   try {
     const { username, password } = req.body;
-
+    console.log(password);
     // Validate username format
     if (!/^USER|WUSER/.test(username)) {
       return res.status(400).json({ message: "Invalid username format" });
@@ -51,14 +51,15 @@ authRouter.post("/api/signin", async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    if (password !== user.password) {
-      return res.status(400).json({ message: "Invalid credentials" });
+    // Compare passwords using bcrypt
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(400).json({ message: "Incorrect Password" });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({ token, ...user._doc });
-  }
-   catch (err) {
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });

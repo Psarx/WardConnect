@@ -69,7 +69,7 @@ class AuthService {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
-        Uri.parse('${Constants.uri}/api/auth/login'),
+        Uri.parse('${Constants.uri}/api/signin'),
         body: jsonEncode({
           'username': username,
           'password': password,
@@ -104,8 +104,12 @@ class AuthService {
         } else {
           // Handle other cases if necessary
         }
+      } else if (res.statusCode == 400) {
+        // Display error message from backend
+        String errorMessage = jsonDecode(res.body)['message'];
+        showSnackBar(context, errorMessage);
       } else {
-        // Handle unsuccessful sign-in
+        // Handle other status codes if necessary
         showSnackBar(context, 'Failed to sign in. Please try again later.');
       }
     } catch (e) {
