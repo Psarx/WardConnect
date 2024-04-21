@@ -308,10 +308,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ward_connect/screens/user/complaint.dart';
 
 import 'package:ward_connect/screens/user/profile.dart';
-import 'package:ward_connect/screens/user/Scheme_page.dart';
+import 'package:ward_connect/screens/member/Applied_Scheme.dart';
 import 'package:ward_connect/screens/user/certificate_testi.dart';
 import 'package:ward_connect/screens/user/login_screen.dart';
 import 'package:ward_connect/screens/user/Counsellor_Details.dart'; // Import for carousel
+import 'package:ward_connect/screens/member/COT.dart';
+import 'package:ward_connect/screens/member/Applied_Complaints.dart';
 
 void main() {
   runApp(MemberScreen());
@@ -448,11 +450,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Handle navigation to Scheme Page
+                          // Handle navigation to AppliedScheme page
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SchemeScreen()),
+                                builder: (context) => AppliedScheme()),
                           );
                         },
                         style: ButtonStyle(
@@ -467,11 +469,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       SizedBox(height: 40),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle navigation to Complaint of Testimony
+                          // Handle navigation to CertificateTesti page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => CertificateOfTestimony()),
+                            MaterialPageRoute(builder: (context) => COT()),
                           );
                         },
                         style: ButtonStyle(
@@ -481,16 +482,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           foregroundColor: MaterialStateProperty.all(
                               Colors.blue), // Text color of the button
                         ),
-                        child: Text('Complaint of Testimony'),
+                        child: Text('Certificate of Testimony'),
                       ),
                       SizedBox(height: 40),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle navigation to Complaint Screen
+                          // Handle navigation to Complaint page
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ComplaintScreen()),
+                                builder: (context) => AppliedComplaints()),
                           );
                         },
                         style: ButtonStyle(
