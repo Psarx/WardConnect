@@ -169,7 +169,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 controller: usernameController,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Email or Phone number",
+                                  hintText: "Username",
                                   hintStyle: TextStyle(
                                     color: Colors.grey[700],
                                   ),

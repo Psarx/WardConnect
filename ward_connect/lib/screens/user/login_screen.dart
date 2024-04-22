@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginScreen> {
                                 controller: _usernameController,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Email or Phone number",
+                                  hintText: "Username",
                                   hintStyle: TextStyle(
                                     color: Colors.grey[700],
                                   ),

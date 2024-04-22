@@ -65,13 +65,15 @@ authRouter.post("/api/signin", async (req, res) => {
 });
 authRouter.post("/api/complaint",async (req,res)=>{
   try {
+    const usId = req.header('usId');
     const {name,phone,complaint} = req.body;
-    const newComplaint=new Complaint({name,phone,complaint});
+    const newComplaint=new Complaint({usId,name,phone,complaint});
     const complaintdetails = await newComplaint.save();
-    res.json(complaintdetails);
+    res.status(201).json({ message: "Complaint submitted successfully", complaint: complaintdetails });
   }catch(err){
     res.status(500).json({message:err.message});
   }
+  
 })
 authRouter.post('/api/person', async (req, res) => {
   try {

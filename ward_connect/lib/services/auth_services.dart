@@ -208,8 +208,13 @@ class AuthService {
     required String name,
     required String phone,
     required String complaintText,
+    required Function(String) onSuccess, // Callback to handle success message
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String usId = prefs.getString('user') ??
+          ''; // Retrieve usId from shared preferences
+
       ComplaintModel.Complaints complaint = ComplaintModel.Complaints(
         name: name,
         phone: phone,
@@ -221,21 +226,23 @@ class AuthService {
         body: complaint.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'usId': usId,
         },
       );
 
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-            context,
-            'Complaint Submitted',
-          );
-        },
-      );
+      print('Response status code: ${res.statusCode}');
+      print('Response body: ${res.body}');
+
+      if (res.statusCode == 201) {
+        Map<String, dynamic> data = json.decode(res.body);
+        String serverMessage = data['message'];
+        onSuccess(
+            serverMessage); // Call the onSuccess callback with the server message
+      } else {
+        showSnackBar(context, 'Error: ${res.statusCode}');
+      }
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showSnackBar(context, 'Error: $e');
     }
   }
 
