@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/screens/member/App_Cot.dart';
 import 'package:ward_connect/screens/member/home_screen.dart';
 
 void main() {
@@ -93,7 +94,10 @@ class SchemeList extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // Handle Apply button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppCot()),
+                  ); // Handle Apply button press
                 },
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.blue),
