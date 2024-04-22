@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const complaintSchema = mongoose.Schema({
+    usId: {
+        type: String,
+        ref: 'User',
+        required: true
+    },
     name:{
         required: true,
         type: String,
@@ -26,5 +31,5 @@ const complaintSchema = mongoose.Schema({
 })
 
 
-const Complaint = mongoose.model("Complaint", complaintSchema);
+const Complaint = mongoose.model("Complaints", complaintSchema);
 module.exports = Complaint;

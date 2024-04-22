@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/screens/member/home_screen.dart';
 
 void main() {
-  runApp(SchemeScreen());
+  runApp(COT());
 }
 
-class SchemeScreen extends StatelessWidget {
+class COT extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,13 +14,16 @@ class SchemeScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: Text(
-            'Schemes',
+            'Applications Pending',
             style: TextStyle(color: Colors.white),
           ),
           leading: IconButton(
             icon: Icon(Icons.home),
             onPressed: () {
-              // Navigate to home screen or perform any action
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MemberScreen()),
+              ); // Navigate to home screen or perform any action
             },
           ),
         ),
@@ -28,38 +32,38 @@ class SchemeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Center(
-                  child: Text(
-                    'District Council Schemes',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //   child: Center(
+              //     child: Text(
+              //       'Applications',
+              //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: SchemeList(schemes: [
-                  'Scheme 1',
-                  'Scheme 2',
-                  'Scheme 3',
+                  'APP 1',
+                  'APP 2',
+                  'APP 3',
                 ]),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Center(
-                  child: Text(
-                    'Block Panchayath Schemes',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: SchemeList(schemes: [
-                  'Scheme A',
-                  'Scheme B',
-                  'Scheme C',
-                ]),
-              ),
+              //Padding(
+              //padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //child: Center(
+              //child: Text(
+              //'Block Panchayath Schemes',
+              //style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              //),
+              //),
+              //),
+              //Expanded(
+              //child: SchemeList(schemes: [
+              //'Scheme A',
+              //'Scheme B',
+              //'Scheme C',
+              //]),
+              //),
             ],
           ),
         ),
@@ -94,7 +98,7 @@ class SchemeList extends StatelessWidget {
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: Text('Apply'),
+                child: Text('View'),
               ),
             ],
           ),

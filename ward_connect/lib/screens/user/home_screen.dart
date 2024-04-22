@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ward_connect/screens/Scheme_page.dart';
-import 'package:ward_connect/screens/certificate_testi.dart';
-import 'package:ward_connect/screens/login_screen.dart'; // Import for carousel
+import 'package:ward_connect/screens/user/complaint.dart';
+
+import 'package:ward_connect/screens/user/profile.dart';
+import 'package:ward_connect/screens/user/Scheme_page.dart';
+import 'package:ward_connect/screens/user/certificate_testi.dart';
+import 'package:ward_connect/screens/user/login_screen.dart';
+import 'package:ward_connect/screens/user/Counsellor_Details.dart'; // Import for carousel
 
 void main() {
   runApp(HomeScreen());
@@ -26,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Timer? _timer; // Declare _timer as a class-level variable
   int _currentImageIndex = 0;
   final List<String> _imageUrls = [
     'news.jpeg', // Replace with your image paths
@@ -39,11 +44,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % _imageUrls.length;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer to prevent memory leaks
+    super.dispose();
   }
 
   void logout() {
@@ -107,6 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 // Handle navigation to My Profile page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileUI()),
+                );
               },
             ),
             // Add more ListTile widgets for other drawer items
@@ -121,8 +140,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: Text('Counsellor Details'),
               onTap: () {
-                // Handle navigation to Counsellor Details page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Counsellor()),
+                );
               },
             ),
             ListTile(
@@ -130,6 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 // Handle navigation to Complaints & Enquiry page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ComplaintScreen()),
+                );
               },
             ),
             ListTile(
