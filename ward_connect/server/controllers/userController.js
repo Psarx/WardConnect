@@ -9,7 +9,6 @@ const getUserDetails = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log
     // Fetch personal details associated with the user
     const personalDetails = await PersonalDetails.findOne({ usId: req.header("user") });
 
