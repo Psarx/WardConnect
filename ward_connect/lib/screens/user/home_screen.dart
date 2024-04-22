@@ -30,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Timer? _timer; // Declare _timer as a class-level variable
   int _currentImageIndex = 0;
   final List<String> _imageUrls = [
     'news.jpeg', // Replace with your image paths
@@ -43,11 +44,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % _imageUrls.length;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer to prevent memory leaks
+    super.dispose();
   }
 
   void logout() {
