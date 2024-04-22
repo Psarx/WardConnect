@@ -2,13 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ward_connect/screens/user/Status.dart';
 import 'package:ward_connect/screens/user/complaint.dart';
 
 import 'package:ward_connect/screens/user/profile.dart';
 import 'package:ward_connect/screens/user/Scheme_page.dart';
 import 'package:ward_connect/screens/user/certificate_testi.dart';
 import 'package:ward_connect/screens/user/login_screen.dart';
-import 'package:ward_connect/screens/user/Counsellor_Details.dart'; // Import for carousel
+import 'package:ward_connect/screens/user/Counsellor_Details.dart';
+// Import for carousel
+import 'package:ward_connect/screens/user/Status.dart';
 
 void main() {
   runApp(HomeScreen());
@@ -134,7 +137,11 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Application Status'),
               onTap: () {
                 // Handle navigation to Application Status page (replace with your implementation)
-                Navigator.pop(context); // Close drawer
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Status()),
+                ); // Close drawer
               },
             ),
             ListTile(
