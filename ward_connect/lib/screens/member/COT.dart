@@ -111,3 +111,119 @@ class SchemeList extends StatelessWidget {
     );
   }
 }
+
+// import 'dart:convert';
+// import 'package:flutter/material.dart';
+
+// // Assuming you have a backend service to fetch complaints data
+// // and you have a function to fetch complaints which returns a List of JSON strings
+// // You need to replace 'fetchComplaintsFromBackend()' with your actual backend call
+
+// List<String> fetchComplaintsFromBackend() {
+//   // Simulated JSON response from backend
+//   return [
+//     '''
+//     {
+//       "name": "Alice",
+//       "phone": "1234567890",
+//       "complaint": "Slow internet connection"
+//     }
+//     ''',
+//     '''
+//     {
+//       "name": "Bob",
+//       "phone": "9876543210",
+//       "complaint": "High electricity bills"
+//     }
+//     ''',
+//     // Add more complaints JSON strings as needed
+//   ];
+// }
+
+// void main() {
+//   runApp(COT());
+// }
+
+// class CO extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Complaints List',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: ComplaintsListPage(),
+//     );
+//   }
+// }
+
+// class ComplaintsListPage extends StatefulWidget {
+//   @override
+//   _ComplaintsListPageState createState() => _ComplaintsListPageState();
+// }
+
+// class _ComplaintsListPageState extends State<ComplaintsListPage> {
+//   late List<Complaints> _complaintsList;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Fetch complaints data from backend
+//     List<String> jsonList = fetchComplaintsFromBackend();
+//     // Parse JSON data and initialize _complaintsList
+//     _complaintsList =
+//         jsonList.map((jsonString) => Complaints.fromJson(jsonString)).toList();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Complaints List'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: _complaintsList.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(_complaintsList[index].name),
+//             subtitle: Text(_complaintsList[index].complaint),
+//             trailing: Text(_complaintsList[index].phone),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// class Complaints {
+//   final String name;
+//   final String phone;
+//   final String complaint;
+
+//   Complaints({
+//     required this.name,
+//     required this.phone,
+//     required this.complaint,
+//   });
+
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'name': name,
+//       'phone': phone,
+//       'complaint': complaint,
+//     };
+//   }
+
+//   factory Complaints.fromMap(Map<String, dynamic> map) {
+//     return Complaints(
+//       name: map['name'] ?? '',
+//       phone: map['phone'] ?? '',
+//       complaint: map['complaint'] ?? '',
+//     );
+//   }
+
+//   String toJson() => json.encode(toMap());
+
+//   factory Complaints.fromJson(String source) =>
+//       Complaints.fromMap(json.decode(source));
+// }
