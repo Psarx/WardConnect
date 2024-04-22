@@ -246,26 +246,6 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> fetchSchemes(BuildContext context) async {
-    try {
-      http.Response res = await http.get(
-        Uri.parse('${Constants.uri}/api/auth/schemes'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
-
-      if (res.statusCode == 200) {
-        return json.decode(res.body);
-      } else {
-        throw Exception('Failed to fetch schemes');
-      }
-    } catch (e) {
-      showSnackBar(context, 'Error fetching schemes: $e');
-      return {};
-    }
-  }
-
   void showSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
