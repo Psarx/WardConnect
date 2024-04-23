@@ -27,7 +27,7 @@ class _ViewSchemeState extends State<ViewSchemes> {
       }
 
       final response = await http.get(
-        Uri.parse('http://localhost:8080/api/user/scheme'),
+        Uri.parse('http://localhost:8080/api/user/applications'),
         headers: {'user': userId},
       );
 
@@ -54,32 +54,31 @@ class _ViewSchemeState extends State<ViewSchemes> {
         itemBuilder: (context, index) {
           final scheme = schemes[index];
           return Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(12.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
+            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: ListTile(
+              title: Text('Scheme Id: ${scheme['sid']}'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Applicant name: ${scheme['nameOfApplicant']}'),
+                  Text('Status: ${scheme['status']}'),
                 ],
               ),
-              child: ListTile(
-                title: Text('Scheme Id: ${scheme['sid']}'),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Scheme Details: ${scheme['sdetails']}'),
-                    Text('Applicant name: ${scheme['nameOfApplicant']}'),
-                    Text('Phone: ${scheme['phone']}'),
-                    Text('State: ${scheme['state']}'),
-                  ],
-                ),
-              ));
+            ),
+          );
         },
       ),
     );

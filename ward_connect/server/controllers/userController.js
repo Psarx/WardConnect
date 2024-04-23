@@ -48,15 +48,24 @@ const getCertificates = async (req, res) => {
   }
 }
 
-const getSchemes = async (req, res) => {
-  try {
-    const applidetails = await Application.find({ usId: req.header("user") });
-    res.json(applidetails);
-  } 
-  catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
+// const getSchemes = async (req, res) => {
+//   try {
+//     // Fetch applications from the Application schema
+//     const applications = await Application.find({ usId: req.header("user") }, "sid");
+
+//     // Extract sid from applications
+//     const sids = applications.map(application => application.sid);
+
+//     // Fetch schemes using the extracted sids
+//     const schemes = await Scheme.find({ _id: { $in: sids } }, "sdetails");
+
+//     res.status(200).json(schemes);
+//   } catch (error) {
+//     console.error("Error fetching schemes:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
 
 const getMComplaints = async (req, res) => {
   try {
@@ -77,30 +86,32 @@ const getMCertificates = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
-// const getApplications = async (req, res) => {
-//   try {
-//     // Fetch applications from the Application schema
-//      const applications = await Application.find({ usId: req.header("user") });
+const getApplications = async (req, res) => {
+  try {
+    // Fetch applications from the Application schema
+    const applications = await Application.find({ usId: req.header("user") });
 
-//     // // Extract sid and status from applications
-//     const extractedApplications = applications.map(application => ({
-//       sid: application.sid,
-//       status: application.status
-//     }));
+    // Extract sid and status from applications
+    const extractedApplications = applications.map(application => ({
+      sid: application.sid,
+      status: application.status,
+      nameOfApplicant: application.nameOfApplicant
+    }));
 
-//     // // Get sdetails for each sid
-//     const applicationsWithDetails = await Promise.all(extractedApplications.map(async application => {
-//       const schemeDetails = await Scheme.findOne(application.sid, "sdetails");
-//       return { ...application, sdetails: schemeDetails.sdetails };
-//     }));
+    // Get sdetails for each sid
+    const applicationsWithDetails = await Promise.all(extractedApplications.map(async application => {
+      const schemeDetails = await Scheme.findOne({ sid: application.sid }, "sdetails");
+      return { ...application, sdetails: schemeDetails.sdetails };
+    }));
 
-//     // Return applications with sid, status, and sdetails
-//     res.status(200).json(applicationsWithDetails);
-//   } catch (error) {
-//     console.error("Error fetching applications:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
+    // Return applications with sid, status, and sdetails
+    res.status(200).json(applicationsWithDetails);
+  } catch (error) {
+    console.error("Error fetching applications:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
-module.exports = { getUserDetails,getComplaints,getCertificates,getSchemes,getMComplaints,getMCertificates };
+
+module.exports = { getUserDetails,getComplaints,getCertificates,getApplications,getMComplaints,getMCertificates };
