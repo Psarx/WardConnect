@@ -51,6 +51,11 @@ class _SchemeDetailsPageState extends State<SchemeDetailsPage> {
               decoration: InputDecoration(labelText: 'Scheme Details'),
             ),
             SizedBox(height: 16.0),
+            TextField(
+              controller: detailsController,
+              decoration: InputDecoration(labelText: 'Scheme Type'),
+            ),
+            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 submitSchemeDetails();

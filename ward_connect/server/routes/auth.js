@@ -149,6 +149,30 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+authRouter.post("/api/application", async (req, res) => {
+  try {
+    const { name, age, headOfHousehold, phoneNumber, electionIdNumber, reasonsForPriority, landOwnedDetails, irrigationDetails, otherIncomeDetails, ownHouseDetails, beneficiaryDetails, affidavitChecked } = req.body;
+    const newApplication = new application({
+      name,
+      age,
+      headOfHousehold,
+      phoneNumber,
+      electionIdNumber,
+      reasonsForPriority,
+      landOwnedDetails,
+      irrigationDetails,
+      otherIncomeDetails,
+      ownHouseDetails,
+      beneficiaryDetails,
+      affidavitChecked
+    });
+    const application = await newApplication.save();
+    res.json(application);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // get user data
 authRouter.get('/api/personal-details/', async (req, res) => {
   try {
