@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Data to Database</title>
+<style>
+  /* Add your CSS styles here */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Add Data to Database</h2>
+  <form id="dataForm" method="post" action="/form">
+    <input type="text" id="rid" placeholder="Ration Card ID" required><br>
+    <input type="number" id="totalMembers" placeholder="Total Members" required><br>
+    <input type="text" id="memberName" placeholder="Member Name" required><br>
+    <input type="text" id="relation" placeholder="Relation" required><br>
+    <input type="number" id="age" placeholder="Age" required><br>
+    <input type="text" id="occupation" placeholder="Occupation" required><br>
+    <input type="number" id="income" placeholder="Income" required><br>
+    <button type="submit">Add Data</button>
+  </form>
+</div>
+
+<script>
+  // JavaScript code for sending data to the server
+  document.getElementById("dataForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    
+    // Collect form data
+    let formData = {
+      rid: document.getElementById("rid").value,
+      totalMembers: document.getElementById("totalMembers").value,
+      members: [{
+        name: document.getElementById("memberName").value,
+        relation: document.getElementById("relation").value,
+        age: document.getElementById("age").value,
+        occupation: document.getElementById("occupation").value,
+        income: document.getElementById("income").value
+      }]
+    };
+
+    // Send data to the server
+    // fetch("/api/addData", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(formData)
+    // })
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error("Failed to add data to the database.");
+    //   }
+    //   alert("Data added successfully!");
+    // })
+    // .catch(error => {
+    //   console.error("Error:", error);
+    //   alert("An error occurred. Please try again later.");
+    // });
+    app.post('/api/members', async (req, res) => {
+  try {
+    const memberData = req.body; // Data sent from the client
+    const newMember = new Member(memberData); // Create a new Member document
+    await newMember.save(); // Save the new member to the database
+    res.status(201).json(newMember); // Send the new member as JSON response
+  } catch (err) {
+    console.error('Failed to store member data', err);
+    res.status(500).json({ error: 'Failed to store member data' }); // Send error response
+  }
+});
+
+  });
+</script>
+</body>
+</html>

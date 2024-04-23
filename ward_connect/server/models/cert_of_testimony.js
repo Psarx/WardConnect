@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const certificateSchema = mongoose.Schema({
     usId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true
     },
@@ -27,6 +27,10 @@ const certificateSchema = mongoose.Schema({
         required: true,
         type: String,
         trim: true,
+    },
+    state:{
+        type: String,
+        default: "Applied",
     }
 })
 
