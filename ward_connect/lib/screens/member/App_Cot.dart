@@ -180,8 +180,8 @@ class _MViewCertificateState extends State<MViewCertificates> {
                       ? Text('Approved')
                       : ElevatedButton(
                           onPressed: () {
-                            approveCertificate(
-                                certificate['id']); // Handle approve button tap
+                            approveCertificate(certificate[
+                                '_id']); // Handle approve button tap
                             // setState(() {
                             //   certificate['state'] =
                             //       'Approved'; // Update the approval status

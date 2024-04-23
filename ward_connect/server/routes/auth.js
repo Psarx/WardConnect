@@ -191,35 +191,30 @@ authRouter.get('/api/personal-details/', async (req, res) => {
   }
 });
 
-authRouter.get("/api/view_certificates", async (req, res) => {
-  try {
-    // Fetch all certificates of testimony
-    const usId = req.query._id;
-    console.log(req.query._id);
-    const certificates = await cert_of_testimony.find({usId: usId});
-    console.log(certificates);
-    res.status(200).json(certificates);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-authRouter.get("/api/view_complaints",async (req, res) => {
-  try {
-    // Fetch all certificates of testimony
-    const usId = req.query._id;
-    //console.log(usId);
-    const complaints = await cert_of_testimony.find({usId: usId});
-    res.json(complaints);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({ ...user._doc, token: req.token });
 });
+authRouter.put('/api/certificates/approve/:id', async (req, res) => {
+  const certificateId = req.params.id;
+  console.log(cert_of_testimony);
+  try {
+    // Find the certificate by ID and update its state to "Approved"
+    const updatedCertificate = await cert_of_testimony.findByIdAndUpdate(
+      certificateId,
+      { state: 'Approved' },
+      { new: true }
+    );
 
+    if (!updatedCertificate) {
+      return res.status(404).json({ message: 'Certificate not found' });
+    }
+
+    res.status(200).json(updatedCertificate);
+  } catch (error) {
+    console.error('Error approving certificate:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 module.exports = authRouter;
