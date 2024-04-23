@@ -56,4 +56,25 @@ const getSchemes = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
-module.exports = { getUserDetails,getComplaints,getCertificates,getSchemes };
+
+const getMComplaints = async (req, res) => {
+  try {
+    const complaintdetails = await Complaint.find({ });
+    res.json(complaintdetails);
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+const getMCertificates = async (req, res) => {
+  try {
+    const certificatedetails = await Certificate.find({});
+    res.json(certificatedetails);
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = { getUserDetails,getComplaints,getCertificates,getSchemes,getMComplaints,getMCertificates };

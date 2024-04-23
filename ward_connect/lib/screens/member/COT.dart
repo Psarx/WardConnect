@@ -96,7 +96,8 @@ class SchemeList extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppCot()),
+                    MaterialPageRoute(
+                        builder: (context) => MViewCertificates()),
                   ); // Handle Apply button press
                 },
                 style: ButtonStyle(
