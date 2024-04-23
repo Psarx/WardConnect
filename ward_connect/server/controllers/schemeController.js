@@ -1,5 +1,5 @@
 const Scheme = require('../models/Scheme');
-
+const Application = require('../models/applications');
 // Function to fetch schemes by stype
 async function getSchemesByStype(stype) {
   try {
@@ -11,7 +11,16 @@ async function getSchemesByStype(stype) {
     throw error;
   }
 }
-
+async function getAppliedUsersBySid(sid) {
+  try {
+    // Find applied users with the specified sid
+    const appliedUsers = await Application.find({ sid });
+    return appliedUsers;
+  } catch (error) {
+    console.error("Error fetching applied users:", error);
+    throw error;
+  }
+}
 // Function to add a new scheme
 async function addScheme(sid, sdetails, stype) {
   try {
@@ -30,4 +39,4 @@ async function addScheme(sid, sdetails, stype) {
   }
 }
 
-module.exports = { getSchemesByStype, addScheme };
+module.exports = { getSchemesByStype, addScheme, getAppliedUsersBySid };

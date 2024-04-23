@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const schemeController = require("../controllers/schemeController");
-
+const { getAppliedUsersBySid } = require('../controllers/schemeController');
 // Login route
 router.post("/login", authController.login);
 
@@ -48,6 +48,26 @@ router.get("/schemes", async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  
+// Route to fetch applied users by sid
+  router.get('/applied-users', async (req, res) => {
+    try {
+      // Extract sid from headers
+      const sid = req.headers['sid'];
+
+      // Check if sid is provided
+      if (!sid) {
+        return res.status(400).json({ message: 'SID is required in headers' });
+      }
+
+      // Fetch applied users by sid
+      const appliedUsers = await getAppliedUsersBySid(sid);
+
+      // Return the applied users
+      res.status(200).json(appliedUsers);
+    } catch (error) {
+      console.error("Error fetching applied users:", error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
 
 module.exports = router;

@@ -165,11 +165,10 @@ class _MViewCertificateState extends State<MViewCertificates> {
               ],
             ),
             child: ListTile(
-              title: Text('userId: ${certificate['usId']}'),
+              title: Text('Applied username: ${certificate['appliname']}'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Applied username: ${certificate['appliname']}'),
                   Text('Phone: ${certificate['phone']}'),
                   Text('Details: ${certificate['details']}'),
                   Text('State: ${certificate['state']}'),

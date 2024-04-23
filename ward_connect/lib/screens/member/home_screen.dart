@@ -315,6 +315,7 @@ import 'package:ward_connect/screens/user/login_screen.dart';
 import 'package:ward_connect/screens/user/Counsellor_Details.dart'; // Import for carousel
 import 'package:ward_connect/screens/member/COT.dart';
 import 'package:ward_connect/screens/member/Applied_Complaints.dart';
+import 'package:ward_connect/screens/member/Scheme_App.dart';
 
 void main() {
   runApp(MemberScreen());
@@ -455,7 +456,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AppliedScheme()),
+                                builder: (context) => SchemeApp()),
                           );
                         },
                         style: ButtonStyle(
@@ -474,7 +475,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MViewCertificates()),
+                                builder: (context) => SchemeApp()),
                           );
                         },
                         style: ButtonStyle(

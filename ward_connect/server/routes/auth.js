@@ -174,23 +174,6 @@ authRouter.post("/api/application", async (req, res) => {
   }
 });
 
-
-// get user data
-authRouter.get('/api/personal-details/', async (req, res) => {
-  try {
-      // Assuming the username of the logged-in user is available in req.user.username
-      const username = req.query.username;
-      const user = await personal_details.findOne({ username: username });
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-      res.status(200).json(user);
-  } catch (error) {
-      console.error('Error fetching personal details:', error);
-      res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({ ...user._doc, token: req.token });
