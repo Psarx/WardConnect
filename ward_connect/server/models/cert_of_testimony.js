@@ -27,6 +27,10 @@ const certificateSchema = mongoose.Schema({
         required: true,
         type: String,
         trim: true,
+    },
+    state:{
+        type: String,
+        default: "Applied",
     }
 })
 

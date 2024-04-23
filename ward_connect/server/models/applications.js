@@ -83,7 +83,12 @@ const applicationSchema = new mongoose.Schema({
   affidavitChecked: { 
     type: Boolean, 
     required: true
- }
+ },
+ state:{
+    type: String,
+    default: "Applied",
+}
+
 });
 
 const Application = mongoose.model('Application', applicationSchema);
