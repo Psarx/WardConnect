@@ -14,6 +14,7 @@ import 'package:ward_connect/screens/user/Counsellor_Details.dart';
 import 'package:ward_connect/screens/user/Status.dart';
 import 'package:ward_connect/screens/user/view_cot.dart';
 import 'package:ward_connect/screens/user/view_complaints.dart';
+import 'package:ward_connect/screens/user/view_schemes.dart';
 
 //import 'package:ward_connect/screens/user/view_cot.dart';
 //import 'package:ward_connect/screens/user/view_complaints.dart';
@@ -145,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Status()),
+                  MaterialPageRoute(builder: (context) => ViewCertificates()),
                 ); // Close drawer
               },
             ),
@@ -176,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context); // Close drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Status()),
+                  MaterialPageRoute(builder: (context) => ViewSchemes()),
                 );
               },
             ),

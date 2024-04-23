@@ -575,6 +575,27 @@ class _ApplicationFormState extends State<ApplicationForm> {
                           body: jsonEncode(formData),
                         );
 
+
+                      // Show application submitted message
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Application Submitted'),
+                            content: Text(
+                                'Your application has been successfully submitted.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SchemeScreen()),
+                                  );
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
                         if (response.statusCode == 201) {
                           // Clear the form
                           _resetForm();
