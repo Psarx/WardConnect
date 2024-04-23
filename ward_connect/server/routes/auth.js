@@ -7,6 +7,7 @@ const auth = require("../middleware/auth");
 const Complaint = require("../models/complaint");
 const cert_of_testimony= require("../models/cert_of_testimony");
 const personal_details = require("../models/personal_details");
+const Application = require('../models/applications');
 
 authRouter.post("/api/signup", async (req, res) => {
   try {
@@ -115,25 +116,7 @@ authRouter.post("/api/certificate",async (req,res)=>{
     res.status(500).json({message:err.message});
   }
 });
-// authRouter.post("/api/signup",async (req,res)=>{
-//   try{
-//       const {name,email,password}=req.body;
-//       const existingUser=await User.findOne({email});
-//       if(existingUser){
-//           return res.status(400).json({message:"User already exists"});
-//       }
-//       const salt = await bcrypt.genSalt(Number(process.env.SALT));
-//       const hashedPassword = await bcrypt.hash(req.body.password, salt);//hashing
-//       const user=new User({name,email,password:hashedPassword});
-//       const userdetails = await user.save();
-//       res.json(userdetails);
-//   }catch(err){
-//       res.status(500).json({message:err.message});
-//   }
-// }
-// );
 
-//jwt token 
 authRouter.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
@@ -151,27 +134,46 @@ authRouter.post("/tokenIsValid", async (req, res) => {
 
 authRouter.post("/api/application", async (req, res) => {
   try {
-    const { name, age, headOfHousehold, phoneNumber, electionIdNumber, reasonsForPriority, landOwnedDetails, irrigationDetails, otherIncomeDetails, ownHouseDetails, beneficiaryDetails, affidavitChecked } = req.body;
-    const newApplication = new application({
-      name,
+    const { nameOfApplicant, age, headOfHousehold, phoneNumber, electionIdNumber, memberOfKudumbasree, residentOfPanchayath, reasonsForPriority, landOwned, irrigationDetails, otherIncomeDetails, houseDetails, previousBeneficiaries, affidavitChecked } = req.body;
+    console.log(req.headers["user"]);
+    // Extract usId and sid from headers
+    const usId = req.headers['user'];
+    const sid = req.headers['sid'];
+    console.log(sid);
+    // Check if usId and sid are provided
+    if (!usId || !sid) {
+      return res.status(400).json({ message: 'User ID (usId) and Scheme ID (sid) are required in headers' });
+    }
+
+    const newApplication = new Application({
+      nameOfApplicant,
       age,
       headOfHousehold,
       phoneNumber,
       electionIdNumber,
+      memberOfKudumbasree,
+      residentOfPanchayath,
       reasonsForPriority,
-      landOwnedDetails,
+      landOwned,
       irrigationDetails,
       otherIncomeDetails,
-      ownHouseDetails,
-      beneficiaryDetails,
-      affidavitChecked
+      houseDetails,
+      previousBeneficiaries,
+      affidavitChecked,
+      sid,
+      usId
     });
+    
+    // Save the new application
     const application = await newApplication.save();
-    res.json(application);
+    console.log(application);
+    res.status(201).json(application);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Error:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 // get user data
 authRouter.get('/api/personal-details/', async (req, res) => {

@@ -29,7 +29,7 @@ const applicationSchema = new mongoose.Schema({
      type: String, 
      required: true 
     },
-  electionIDNumber: { 
+  electionIdNumber: { 
     type: String, 
     required: true
  },
@@ -84,7 +84,7 @@ const applicationSchema = new mongoose.Schema({
     type: Boolean, 
     required: true
  },
- state:{
+ status:{
     type: String,
     default: "Applied",
 }

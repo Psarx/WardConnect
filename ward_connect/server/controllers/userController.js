@@ -1,7 +1,8 @@
 const User = require("../models/user");
 const PersonalDetails = require("../models/personal_details");
 const Complaint = require("../models/complaint");
-
+// const Application = require("../models/applications");
+const Scheme = require("../models/Scheme");
 const getUserDetails = async (req, res) => {
   try {
     // Fetch user details using req.user (from auth middleware)
@@ -35,5 +36,29 @@ const getComplaints = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+// const getApplications = async (req, res) => {
+//   try {
+//     // Fetch applications from the Application schema
+//      const applications = await Application.find({ usId: req.header("user") });
+
+//     // // Extract sid and status from applications
+//     const extractedApplications = applications.map(application => ({
+//       sid: application.sid,
+//       status: application.status
+//     }));
+
+//     // // Get sdetails for each sid
+//     const applicationsWithDetails = await Promise.all(extractedApplications.map(async application => {
+//       const schemeDetails = await Scheme.findOne(application.sid, "sdetails");
+//       return { ...application, sdetails: schemeDetails.sdetails };
+//     }));
+
+//     // Return applications with sid, status, and sdetails
+//     res.status(200).json(applicationsWithDetails);
+//   } catch (error) {
+//     console.error("Error fetching applications:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 
 module.exports = { getUserDetails,getComplaints };

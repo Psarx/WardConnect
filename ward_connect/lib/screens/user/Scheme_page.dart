@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences package
 import 'package:ward_connect/screens/user/home_screen.dart';
-import 'package:ward_connect/services/auth_services.dart'; // Import AuthService to access fetchSchemesByType
+import 'package:ward_connect/screens/user/form.dart';
+import 'package:ward_connect/services/auth_services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:ward_connect/screens/user/form.dart';
 
 class SchemeScreen extends StatefulWidget {
   @override
@@ -27,10 +28,7 @@ class _SchemeScreenState extends State<SchemeScreen> {
           await http.get(Uri.parse('http://localhost:8080/api/auth/schemes'));
       if (response.statusCode == 200) {
         Map<String, dynamic> schemeData = json.decode(response.body);
-        print(schemeData); // Print the fetched scheme data
-        // Update state with fetched scheme data
         setState(() {
-          // Assuming your scheme data structure has keys 'schemesOfType1' and 'schemesOfType2'
           schemesOfType1 = schemeData['schemesOfType1'];
           schemesOfType2 = schemeData['schemesOfType2'];
         });
@@ -39,8 +37,13 @@ class _SchemeScreenState extends State<SchemeScreen> {
       }
     } catch (e) {
       print('Error fetching schemes: $e');
-      // Handle error gracefully, e.g., show an error message to the user
     }
+  }
+
+  // Function to store scheme ID in shared preferences
+  Future<void> storeSchemeId(String schemeId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('schemeId', schemeId);
   }
 
   @override
@@ -55,7 +58,7 @@ class _SchemeScreenState extends State<SchemeScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
-            ); // Add your home icon functionality here
+            );
           },
         ),
       ),
@@ -95,10 +98,13 @@ class _SchemeScreenState extends State<SchemeScreen> {
               subtitle: Text(schemes[index]['sdetails'] ?? ''),
               trailing: ElevatedButton(
                 onPressed: () {
+                  String schemeId = schemes[index]['sid'];
+                  storeSchemeId(
+                      schemeId); // Store scheme ID in shared preferences
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AppForm()),
-                  ); // Add your apply button functionality here
+                  );
                 },
                 child: Text('Apply'),
               ),
