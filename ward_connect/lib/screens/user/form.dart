@@ -1155,7 +1155,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomeScreen()),
+                                        builder: (context) => SchemeScreen()),
                                   );
                                 },
                                 child: Text('OK'),
