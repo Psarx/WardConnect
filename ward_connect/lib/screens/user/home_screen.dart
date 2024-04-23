@@ -12,8 +12,13 @@ import 'package:ward_connect/screens/user/login_screen.dart';
 import 'package:ward_connect/screens/user/Counsellor_Details.dart';
 // Import for carousel
 import 'package:ward_connect/screens/user/Status.dart';
+<<<<<<< HEAD
 import 'package:ward_connect/screens/user/view_cot.dart';
 import 'package:ward_connect/screens/user/view_complaints.dart';
+=======
+//import 'package:ward_connect/screens/user/view_cot.dart';
+//import 'package:ward_connect/screens/user/view_complaints.dart';
+>>>>>>> 90df03a8e1dda6fdd9512fba49e81491324be65a
 
 void main() {
   runApp(HomeScreen());

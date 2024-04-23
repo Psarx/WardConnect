@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ward_connect/services/auth_services.dart'; // Import AuthService to access fetchSchemesByType
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:ward_connect/screens/user/form.dart';
 
 class SchemeScreen extends StatefulWidget {
   @override
@@ -83,7 +84,10 @@ class _SchemeScreenState extends State<SchemeScreen> {
               subtitle: Text(schemes[index]['sdetails'] ?? ''),
               trailing: ElevatedButton(
                 onPressed: () {
-                  // Add your apply button functionality here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppForm()),
+                  ); // Add your apply button functionality here
                 },
                 child: Text('Apply'),
               ),
