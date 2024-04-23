@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/screens/user/home_screen.dart';
 import 'package:ward_connect/services/auth_services.dart'; // Import AuthService to access fetchSchemesByType
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -46,7 +47,17 @@ class _SchemeScreenState extends State<SchemeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text('Schemes'),
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            ); // Add your home icon functionality here
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

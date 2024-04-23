@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ward_connect/screens/user/Scheme_page.dart';
 
 void main() {
   runApp(AppForm());
@@ -45,7 +46,17 @@ class _ApplicationFormState extends State<ApplicationForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text('Application Form'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SchemeScreen()),
+            ); // Add your home icon functionality here
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
