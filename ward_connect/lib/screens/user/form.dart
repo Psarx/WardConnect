@@ -29,8 +29,18 @@ class _ApplicationFormState extends State<ApplicationForm> {
   String? _roofing;
   String? _wall;
   String? _floor;
-  bool _hasToilet = false;
-
+  String? _hasToilet;
+  String? _residentOfPanchayath;
+  String? _ownHouse;
+  String? _beneficiary;
+  bool _pondChecked = false;
+  bool _wellChecked = false;
+  bool _pumpsetChecked = false;
+  bool _othersChecked = false;
+  bool _buildingChecked = false;
+  bool _vehicleChecked = false;
+  bool _cowChecked = false;
+  bool _otherssChecked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,25 +129,11 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   },
                 ),
                 SizedBox(height: 16.0),
-                SwitchListTile(
-                  title: Text('Is a subscriber of Ashraya'),
-                  value: false,
-                  onChanged: (bool value) {
-                    setState(() {});
-                  },
-                ),
-                SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Occupation'),
-                  value: _occupation,
-                  items: <String>[
-                    'Unmarried',
-                    'Disabled',
-                    'Fisherman',
-                    'Widow',
-                    'Mentally Challenged',
-                    'Old Resident'
-                  ].map((String value) {
+                  decoration: InputDecoration(
+                      labelText: 'Permanent Resident of Panchayath'),
+                  value: _residentOfPanchayath,
+                  items: <String>['Yes', 'No'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -145,7 +141,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   }).toList(),
                   onChanged: (String? newValue) {
                     setState(() {
-                      _occupation = newValue;
+                      _residentOfPanchayath = newValue;
                     });
                   },
                   validator: (value) {
@@ -153,14 +149,6 @@ class _ApplicationFormState extends State<ApplicationForm> {
                       return 'Please select an option';
                     }
                     return null;
-                  },
-                ),
-                SizedBox(height: 16.0),
-                SwitchListTile(
-                  title: Text('Permanent Resident of Panchayath'),
-                  value: false,
-                  onChanged: (bool value) {
-                    setState(() {});
                   },
                 ),
                 SizedBox(height: 16.0),
@@ -176,11 +164,12 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   },
                 ),
                 SizedBox(height: 16.0),
+                Text('Land Owned Details'),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Village'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter village name';
+                      return null;
                     }
                     return null;
                   },
@@ -189,7 +178,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   decoration: InputDecoration(labelText: 'Survey Number'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter survey number';
+                      return null;
                     }
                     return null;
                   },
@@ -198,146 +187,199 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   decoration: InputDecoration(labelText: 'Area'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter area';
+                      return null;
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 16.0),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Wheat-area'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter wheat area';
-                    }
-                    return null;
-                  },
+                Text('Irrigation Details'),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _pondChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _pondChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Pond'),
+                  ],
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Coconut-count'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter coconut count';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _wellChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _wellChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Well'),
+                  ],
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Coconut-area'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter coconut area';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _pumpsetChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _pumpsetChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Pump Set'),
+                  ],
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Sesame-area'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter sesame area';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _othersChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _othersChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Others'),
+                  ],
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Vegetables-area'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter vegetables area';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Other-area'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter other area';
-                    }
-                    return null;
-                  },
-                ),
+                // SizedBox(height: 16.0),
+                // Text('Irrigation Details'),
+                // CheckboxListTile(
+                //   title: Text('Pond'),
+                //   value: _pondChecked,
+                //   onChanged: (bool? value) {
+                //     setState(() {
+                //       _pondChecked = value ?? false;
+                //       if (_pondChecked) {
+                //         _wellChecked = false;
+                //         _pumpsetChecked = false;
+                //         _othersChecked = false;
+                //       }
+                //     });
+                //   },
+                // ),
+                // CheckboxListTile(
+                //   title: Text('Well'),
+                //   value: _wellChecked,
+                //   onChanged: (bool? value) {
+                //     setState(() {
+                //       _wellChecked = value ?? false;
+                //       if (_wellChecked) {
+                //         _pondChecked = false;
+                //         _pumpsetChecked = false;
+                //         _othersChecked = false;
+                //       }
+                //     });
+                //   },
+                // ),
+                // CheckboxListTile(
+                //   title: Text('Pump Set'),
+                //   value: _pumpsetChecked,
+                //   onChanged: (bool? value) {
+                //     setState(() {
+                //       _pumpsetChecked = value ?? false;
+                //       if (_pumpsetChecked) {
+                //         _pondChecked = false;
+                //         _wellChecked = false;
+                //         _othersChecked = false;
+                //       }
+                //     });
+                //   },
+                // ),
+                // CheckboxListTile(
+                //   title: Text('Others'),
+                //   value: _othersChecked,
+                //   onChanged: (bool? value) {
+                //     setState(() {
+                //       _othersChecked = value ?? false;
+                //       if (_othersChecked) {
+                //         _pondChecked = false;
+                //         _wellChecked = false;
+                //         _pumpsetChecked = false;
+                //       }
+                //     });
+                //   },
+                // ),
                 SizedBox(height: 16.0),
-                CheckboxListTile(
-                  title: Text('Pond'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
+                Text('Other Income Details:'),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _cowChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _cowChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Cow'),
+                  ],
                 ),
-                CheckboxListTile(
-                  title: Text('Well'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _buildingChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _buildingChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Building'),
+                  ],
                 ),
-                CheckboxListTile(
-                  title: Text('Pump Set'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _vehicleChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _vehicleChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Vehicle'),
+                  ],
                 ),
-                CheckboxListTile(
-                  title: Text('Others'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _othersChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _othersChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Others'),
+                  ],
                 ),
+
                 SizedBox(height: 16.0),
-                CheckboxListTile(
-                  title: Text('Cow'),
-                  value: false,
-                  onChanged: (bool? value) {
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      labelText: 'Does the applicant own a house'),
+                  value: _ownHouse,
+                  items: <String>['Yes', 'No'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
                     setState(() {
-                      _affidavitChecked = value!;
+                      _ownHouse = newValue;
                     });
                   },
-                ),
-                CheckboxListTile(
-                  title: Text('Building'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title: Text('Vehicle'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title: Text('Others'),
-                  value: false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _affidavitChecked = value!;
-                    });
-                  },
-                ),
-                SizedBox(height: 16.0),
-                SwitchListTile(
-                  title: Text('Does the applicant own a house'),
-                  value: false,
-                  onChanged: (bool value) {
-                    setState(() {});
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return null;
+                    }
+                    return null;
                   },
                 ),
                 SizedBox(height: 16.0),
@@ -345,7 +387,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   decoration: InputDecoration(labelText: 'Area of House'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter area of house';
+                      return null;
                     }
                     return null;
                   },
@@ -367,7 +409,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select an option';
+                      return null;
                     }
                     return null;
                   },
@@ -390,7 +432,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select an option';
+                      return null;
                     }
                     return null;
                   },
@@ -413,15 +455,16 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select an option';
+                      return null;
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Toilet'),
-                  value: _floor,
+                  decoration: InputDecoration(
+                      labelText: 'Does the house owned have toilet'),
+                  value: _hasToilet,
                   items: <String>['Yes', 'No'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -430,12 +473,36 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   }).toList(),
                   onChanged: (String? newValue) {
                     setState(() {
-                      _floor = newValue;
+                      _hasToilet = newValue;
                     });
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select an option';
+                      return null;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      labelText:
+                          'Are there any previous benefitors from schemes'),
+                  value: _beneficiary,
+                  items: <String>['Yes', 'No'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _beneficiary = newValue;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return null;
                     }
                     return null;
                   },
@@ -445,7 +512,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   decoration: InputDecoration(labelText: 'Name of Beneficiary'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter name of beneficiary';
+                      return null;
                     }
                     return null;
                   },
@@ -454,16 +521,16 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   decoration: InputDecoration(labelText: 'Benefit Received'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter benefit received';
+                      return null;
                     }
                     return null;
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Year'),
+                  decoration: InputDecoration(labelText: 'Year Received'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter year';
+                      return null;
                     }
                     return null;
                   },
@@ -486,6 +553,30 @@ class _ApplicationFormState extends State<ApplicationForm> {
                         _affidavitChecked) {
                       // Submit form data
                       // Perform further actions
+
+                      // Clear the form
+                      _formKey.currentState!.reset();
+
+                      // Show application submitted message
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Application Submitted'),
+                            content: Text(
+                                'Your application has been successfully submitted.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     } else {
                       // Show error message or handle invalid form
                     }
