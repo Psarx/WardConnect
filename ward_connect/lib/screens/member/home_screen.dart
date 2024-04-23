@@ -305,6 +305,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ward_connect/screens/member/App_Cot.dart';
 import 'package:ward_connect/screens/user/complaint.dart';
 
 import 'package:ward_connect/screens/user/profile.dart';
@@ -472,7 +473,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           // Handle navigation to CertificateTesti page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => COT()),
+                            MaterialPageRoute(
+                                builder: (context) => MViewCertificates()),
                           );
                         },
                         style: ButtonStyle(
@@ -491,7 +493,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AppliedComplaints()),
+                                builder: (context) => MViewComplaint()),
                           );
                         },
                         style: ButtonStyle(

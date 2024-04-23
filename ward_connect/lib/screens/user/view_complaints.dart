@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MViewComplaint extends StatefulWidget {
+class ViewComplaint extends StatefulWidget {
   @override
-  _MViewComplaintState createState() => _MViewComplaintState();
+  _ViewComplaintState createState() => _ViewComplaintState();
 }
 
-class _MViewComplaintState extends State<MViewComplaint> {
+class _ViewComplaintState extends State<ViewComplaint> {
   List<Map<String, dynamic>> complaints = [];
 
   @override
@@ -19,16 +19,16 @@ class _MViewComplaintState extends State<MViewComplaint> {
 
   Future<void> fetchComplaints() async {
     try {
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-      //   String? userId = prefs.getString('user');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('user');
 
-      //   if (userId == null) {
-      //     throw Exception('User ID not found in SharedPreferences');
-      //   }
+      if (userId == null) {
+        throw Exception('User ID not found in SharedPreferences');
+      }
 
       final response = await http.get(
-        Uri.parse('http://localhost:8080/api/user/mcomplaints'),
-        //headers: {'user': userId},
+        Uri.parse('http://localhost:8080/api/user/complaints'),
+        headers: {'user': userId},
       );
 
       if (response.statusCode == 200) {

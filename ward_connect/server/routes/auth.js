@@ -7,6 +7,7 @@ const auth = require("../middleware/auth");
 const Complaint = require("../models/complaint");
 const cert_of_testimony= require("../models/cert_of_testimony");
 const personal_details = require("../models/personal_details");
+const Application = require('../models/applications');
 
 authRouter.post("/api/signup", async (req, res) => {
   try {
@@ -74,7 +75,23 @@ authRouter.post("/api/complaint",async (req,res)=>{
     res.status(500).json({message:err.message});
   }
   
-})
+});
+authRouter.get("/api/complaints", async (req, res) => {
+  try {
+    // Extract the user ID from the request headers
+    const usId = req.header('usId');
+
+    // Fetch complaints associated with the user ID
+    const userComplaints = await Complaint.find({ usId: usId });
+
+    // Respond with the fetched complaints
+    res.status(200).json({ complaints: userComplaints });
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching complaints:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 authRouter.post('/api/person', async (req, res) => {
   try {
     const {username,name,phone,age,hno,hname,rid,rtype,adhar_no} = req.body; 
@@ -90,35 +107,16 @@ authRouter.post('/api/person', async (req, res) => {
 
 authRouter.post("/api/certificate",async (req,res)=>{
   try {
+    const usId = req.header('usId');
     const {appliname,phone,details} = req.body;
-    const newCertificate=new cert_of_testimony({appliname,phone,details});
+    const newCertificate=new cert_of_testimony({usId,appliname,phone,details});
     const certificate = await newCertificate.save();
     res.json(certificate);
   }catch(err){
     res.status(500).json({message:err.message});
   }
-})
+});
 
-
-// authRouter.post("/api/signup",async (req,res)=>{
-//   try{
-//       const {name,email,password}=req.body;
-//       const existingUser=await User.findOne({email});
-//       if(existingUser){
-//           return res.status(400).json({message:"User already exists"});
-//       }
-//       const salt = await bcrypt.genSalt(Number(process.env.SALT));
-//       const hashedPassword = await bcrypt.hash(req.body.password, salt);//hashing
-//       const user=new User({name,email,password:hashedPassword});
-//       const userdetails = await user.save();
-//       res.json(userdetails);
-//   }catch(err){
-//       res.status(500).json({message:err.message});
-//   }
-// }
-// );
-
-//jwt token 
 authRouter.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
@@ -134,12 +132,54 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+authRouter.post("/api/application", async (req, res) => {
+  try {
+    const { nameOfApplicant, age, headOfHousehold, phoneNumber, electionIdNumber, memberOfKudumbasree, residentOfPanchayath, reasonsForPriority, landOwned, irrigationDetails, otherIncomeDetails, houseDetails, previousBeneficiaries, affidavitChecked } = req.body;
+    console.log(req.headers["user"]);
+    // Extract usId and sid from headers
+    const usId = req.headers['user'];
+    const sid = req.headers['sid'];
+    console.log(sid);
+    // Check if usId and sid are provided
+    if (!usId || !sid) {
+      return res.status(400).json({ message: 'User ID (usId) and Scheme ID (sid) are required in headers' });
+    }
+
+    const newApplication = new Application({
+      nameOfApplicant,
+      age,
+      headOfHousehold,
+      phoneNumber,
+      electionIdNumber,
+      memberOfKudumbasree,
+      residentOfPanchayath,
+      reasonsForPriority,
+      landOwned,
+      irrigationDetails,
+      otherIncomeDetails,
+      houseDetails,
+      previousBeneficiaries,
+      affidavitChecked,
+      sid,
+      usId
+    });
+    
+    // Save the new application
+    const application = await newApplication.save();
+    console.log(application);
+    res.status(201).json(application);
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 // get user data
 authRouter.get('/api/personal-details/', async (req, res) => {
   try {
       // Assuming the username of the logged-in user is available in req.user.username
       const username = req.query.username;
-      
       const user = await personal_details.findOne({ username: username });
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
@@ -151,6 +191,30 @@ authRouter.get('/api/personal-details/', async (req, res) => {
   }
 });
 
+authRouter.get("/api/view_certificates", async (req, res) => {
+  try {
+    // Fetch all certificates of testimony
+    const usId = req.query._id;
+    console.log(req.query._id);
+    const certificates = await cert_of_testimony.find({usId: usId});
+    console.log(certificates);
+    res.status(200).json(certificates);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+authRouter.get("/api/view_complaints",async (req, res) => {
+  try {
+    // Fetch all certificates of testimony
+    const usId = req.query._id;
+    //console.log(usId);
+    const complaints = await cert_of_testimony.find({usId: usId});
+    res.json(complaints);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
