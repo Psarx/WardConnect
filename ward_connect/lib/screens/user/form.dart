@@ -184,7 +184,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Area'),
+                  decoration: InputDecoration(labelText: 'Area (in acre)'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return null;
@@ -384,7 +384,8 @@ class _ApplicationFormState extends State<ApplicationForm> {
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Area of House'),
+                  decoration:
+                      InputDecoration(labelText: 'Area of House (in sq ft)'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return null;
