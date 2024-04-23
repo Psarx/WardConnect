@@ -8,6 +8,11 @@ const applicationSchema = new mongoose.Schema({
         ref: 'schemes',
         required:true
     },
+    sdetails:{
+      type: String,
+      ref: 'schemes',
+      required:true
+  },
     usId:{
         type: String,
         ref: 'User',

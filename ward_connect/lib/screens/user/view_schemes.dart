@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ViewCertificates extends StatefulWidget {
+class ViewSchemes extends StatefulWidget {
   @override
-  _ViewCertificateState createState() => _ViewCertificateState();
+  _ViewSchemeState createState() => _ViewSchemeState();
 }
 
-class _ViewCertificateState extends State<ViewCertificates> {
-  List<Map<String, dynamic>> certificates = [];
+class _ViewSchemeState extends State<ViewSchemes> {
+  List<Map<String, dynamic>> schemes = [];
 
   @override
   void initState() {
     super.initState();
-    fetchCertificates();
+    fetchSchemes();
   }
 
-  Future<void> fetchCertificates() async {
+  Future<void> fetchSchemes() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString('user');
@@ -27,20 +27,19 @@ class _ViewCertificateState extends State<ViewCertificates> {
       }
 
       final response = await http.get(
-        Uri.parse('http://localhost:8080/api/user/certificates'),
+        Uri.parse('http://localhost:8080/api/user/scheme'),
         headers: {'user': userId},
       );
 
       if (response.statusCode == 200) {
         setState(() {
-          certificates =
-              List<Map<String, dynamic>>.from(json.decode(response.body));
+          schemes = List<Map<String, dynamic>>.from(json.decode(response.body));
         });
       } else {
-        throw Exception('Failed to load certificatess');
+        throw Exception('Failed to load schemes');
       }
     } catch (e) {
-      print('Error fetching certificates: $e');
+      print('Error fetching schemes: $e');
     }
   }
 
@@ -48,12 +47,12 @@ class _ViewCertificateState extends State<ViewCertificates> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Certificates'),
+        title: Text('View Applied Schemes'),
       ),
       body: ListView.builder(
-        itemCount: certificates.length,
+        itemCount: schemes.length,
         itemBuilder: (context, index) {
-          final certificate = certificates[index];
+          final scheme = schemes[index];
           return Container(
               margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               padding: EdgeInsets.all(16.0),
@@ -70,14 +69,14 @@ class _ViewCertificateState extends State<ViewCertificates> {
                 ],
               ),
               child: ListTile(
-                title: Text('userId: ${certificate['usId']}'),
+                title: Text('Scheme Id: ${scheme['sid']}'),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Applied username: ${certificate['appliname']}'),
-                    Text('Phone: ${certificate['phone']}'),
-                    Text('Details: ${certificate['details']}'),
-                    Text('State: ${certificate['state']}'),
+                    Text('Scheme Details: ${scheme['sdetails']}'),
+                    Text('Applicant name: ${scheme['nameOfApplicant']}'),
+                    Text('Phone: ${scheme['phone']}'),
+                    Text('State: ${scheme['state']}'),
                   ],
                 ),
               ));
