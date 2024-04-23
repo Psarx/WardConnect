@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ward_connect/screens/member/user_details.dart';
 
 class AppliedUsersScreen extends StatefulWidget {
   final String sid;
@@ -19,6 +20,11 @@ class _AppliedUsersScreenState extends State<AppliedUsersScreen> {
   void initState() {
     super.initState();
     fetchAppliedUsers();
+  }
+
+  Future<void> storeApId(String apId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('apId', apId);
   }
 
   Future<void> fetchAppliedUsers() async {
@@ -85,6 +91,17 @@ class _AppliedUsersScreenState extends State<AppliedUsersScreen> {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         onPressed: () {
+                          String apId = appliedUser['usId'];
+                          storeApId(apId);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ApplicationFormScreen(
+                                usid: 'apId',
+                                sid: 'sid',
+                              ),
+                            ),
+                          ); // Store scheme ID in shared preferences
                           // Handle the button press
                           // For example, navigate to a form screen
                         },

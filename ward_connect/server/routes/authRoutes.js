@@ -5,6 +5,7 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const schemeController = require("../controllers/schemeController");
 const { getAppliedUsersBySid } = require('../controllers/schemeController');
+const applicationController = require('../controllers/schemeController');
 // Login route
 router.post("/login", authController.login);
 
@@ -69,5 +70,6 @@ router.get("/schemes", async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  router.get('/applications', applicationController.getApplicationsByUsidAndSid);
 
 module.exports = router;

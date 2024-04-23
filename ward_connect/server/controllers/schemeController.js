@@ -38,5 +38,18 @@ async function addScheme(sid, sdetails, stype) {
     throw error;
   }
 }
+async function getApplicationsByUsidAndSid(req, res) {
+  const usId = req.headers['usid'];
+  const sid = req.headers['sid'];
 
-module.exports = { getSchemesByStype, addScheme, getAppliedUsersBySid };
+  try {
+    const applications = await Application.findOne({ usId, sid });
+    console.log(applications);
+    res.json(applications);
+  } catch (error) {
+    console.error('Error fetching applications:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+module.exports = { getSchemesByStype,getApplicationsByUsidAndSid, addScheme, getAppliedUsersBySid };
