@@ -82,11 +82,7 @@ class _LoginPageState extends State<LoginScreen> {
                       child: FadeInUp(
                         duration: Duration(milliseconds: 1300),
                         child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('images/clock.png'),
-                            ),
-                          ),
+                          decoration: BoxDecoration(),
                         ),
                       ),
                     ),

@@ -28,5 +28,26 @@ router.get("/schemes", async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  router.post('/schemes/add', async (req, res) => {
+    try {
+      // Extract scheme details from request body
+      const { sid, sdetails, stype } = req.body;
+  
+      // Validate stype value
+      if (stype !== "BP" && stype !== "DC") {
+        return res.status(400).json({ error: "Invalid stype value. Accepted values are 'BP' and 'DC'" });
+      }
+  
+      // Call the addScheme function from the SchemeController to add the scheme
+      await schemeController.addScheme(sid, sdetails, stype);
+  
+      // Respond with success message
+      res.status(201).json({ message: 'Scheme added successfully' });
+    } catch (error) {
+      console.error("Error adding scheme:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  
 
 module.exports = router;

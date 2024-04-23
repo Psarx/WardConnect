@@ -74,7 +74,23 @@ authRouter.post("/api/complaint",async (req,res)=>{
     res.status(500).json({message:err.message});
   }
   
-})
+});
+authRouter.get("/api/complaints", async (req, res) => {
+  try {
+    // Extract the user ID from the request headers
+    const usId = req.header('usId');
+
+    // Fetch complaints associated with the user ID
+    const userComplaints = await Complaint.find({ usId: usId });
+
+    // Respond with the fetched complaints
+    res.status(200).json({ complaints: userComplaints });
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching complaints:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 authRouter.post('/api/person', async (req, res) => {
   try {
     const {username,name,phone,age,hno,hname,rid,rtype,adhar_no} = req.body; 
@@ -90,8 +106,9 @@ authRouter.post('/api/person', async (req, res) => {
 
 authRouter.post("/api/certificate",async (req,res)=>{
   try {
+    const usId = req.header('usId');
     const {appliname,phone,details} = req.body;
-    const newCertificate=new cert_of_testimony({appliname,phone,details});
+    const newCertificate=new cert_of_testimony({usId,appliname,phone,details});
     const certificate = await newCertificate.save();
     res.json(certificate);
   }catch(err){
