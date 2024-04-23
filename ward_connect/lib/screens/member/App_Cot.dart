@@ -119,6 +119,23 @@ class _MViewCertificateState extends State<MViewCertificates> {
     }
   }
 
+  Future<void> approveCertificate(String id) async {
+    try {
+      final response = await http.put(
+        Uri.parse('http://localhost:8080/api/certificates/approve/$id'),
+      );
+
+      if (response.statusCode == 200) {
+        // If the request is successful, fetch the updated list of certificates
+        await fetchCertificates();
+      } else {
+        throw Exception('Failed to approve certificate');
+      }
+    } catch (e) {
+      print('Error approving certificate: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,11 +180,12 @@ class _MViewCertificateState extends State<MViewCertificates> {
                       ? Text('Approved')
                       : ElevatedButton(
                           onPressed: () {
-                            // Handle approve button tap
-                            setState(() {
-                              certificate['state'] =
-                                  'Approved'; // Update the approval status
-                            });
+                            approveCertificate(
+                                certificate['id']); // Handle approve button tap
+                            // setState(() {
+                            //   certificate['state'] =
+                            //       'Approved'; // Update the approval status
+                            // });
                             // You can also add logic to send a request to the server to update the status of the certificate
                           },
                           child: Text('Approve'),
