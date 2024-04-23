@@ -12,6 +12,8 @@ import 'package:ward_connect/screens/user/login_screen.dart';
 import 'package:ward_connect/screens/user/Counsellor_Details.dart';
 // Import for carousel
 import 'package:ward_connect/screens/user/Status.dart';
+import 'package:ward_connect/screens/user/view_cot.dart';
+import 'package:ward_connect/screens/user/view_complaints.dart';
 
 void main() {
   runApp(HomeScreen());
@@ -134,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // Add more ListTile widgets for other drawer items
             // ...
             ListTile(
-              title: Text('Application Status'),
+              title: Text('View Certificates'),
               onTap: () {
                 // Handle navigation to Application Status page (replace with your implementation)
                 Navigator.pop(context);
@@ -155,24 +157,23 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Complaints & Enquiry'),
+              title: Text('View Complaints'),
               onTap: () {
                 // Handle navigation to Complaints & Enquiry page (replace with your implementation)
                 Navigator.pop(context); // Close drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ComplaintScreen()),
+                  MaterialPageRoute(builder: (context) => Status()),
                 );
               },
             ),
             ListTile(
-              title: Text('Testimony Certificate'),
+              title: Text('View Applied Schemes'),
               onTap: () {
                 Navigator.pop(context); // Close drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => CertificateOfTestimony()),
+                  MaterialPageRoute(builder: (context) => Status()),
                 );
               },
             ),
@@ -257,10 +258,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       TextButton(
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SchemeScreen()),
+                          );
                           // Handle navigation to Scheme 1
                         },
                         child: Text(
-                          'Scheme 1',
+                          'Apply for Schemes',
                           style: TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
@@ -269,10 +275,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       TextButton(
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ComplaintScreen()),
+                          );
                           // Handle navigation to Scheme 2
                         },
                         child: Text(
-                          'Scheme 2',
+                          'Register Complaint',
                           style: TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
@@ -281,10 +292,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       TextButton(
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CertificateOfTestimony()),
+                          );
                           // Handle navigation to Scheme 3
                         },
                         child: Text(
-                          'Scheme 3',
+                          'Apply for Certificate of Testimony',
                           style: TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,

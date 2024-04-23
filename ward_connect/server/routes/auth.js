@@ -97,7 +97,7 @@ authRouter.post("/api/certificate",async (req,res)=>{
   }catch(err){
     res.status(500).json({message:err.message});
   }
-})
+});
 // authRouter.post("/api/signup",async (req,res)=>{
 //   try{
 //       const {name,email,password}=req.body;
@@ -137,7 +137,6 @@ authRouter.get('/api/personal-details/', async (req, res) => {
   try {
       // Assuming the username of the logged-in user is available in req.user.username
       const username = req.query.username;
-      
       const user = await personal_details.findOne({ username: username });
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
@@ -149,6 +148,30 @@ authRouter.get('/api/personal-details/', async (req, res) => {
   }
 });
 
+authRouter.get("/api/view_certificates", async (req, res) => {
+  try {
+    // Fetch all certificates of testimony
+    const usId = req.query._id;
+    console.log(req.query._id);
+    const certificates = await cert_of_testimony.find({usId: usId});
+    console.log(certificates);
+    res.status(200).json(certificates);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+authRouter.get("/api/view_complaints",async (req, res) => {
+  try {
+    // Fetch all certificates of testimony
+    const usId = req.query._id;
+    //console.log(usId);
+    const complaints = await cert_of_testimony.find({usId: usId});
+    res.json(complaints);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
