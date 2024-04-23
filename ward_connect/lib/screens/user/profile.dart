@@ -497,7 +497,6 @@ class _ProfilePageState extends State<ProfilePage> {
     final response = await fetchData('http://localhost:8080/api/user/details');
     if (response.statusCode == 200) {
       Map<String, dynamic> userData = json.decode(response.body);
-      print(userData);
       // Update controllers with fetched data
       setState(() {
         userIdController.text = userData['usId'];

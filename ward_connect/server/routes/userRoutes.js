@@ -2,12 +2,13 @@
 
 const express = require("express");
 const userRoutes = express.Router();
-const authMiddleware = require("../middleware/auth");
-const PersonalDetails = require("../models/personal_details");
 
 const { getUserDetails } = require("../controllers/userController");
+const { getComplaints } = require("../controllers/userController");
+const auth = require("../middleware/auth");
 
 // Fetch user personal details route
-userRoutes.get("/details", authMiddleware, getUserDetails);
+userRoutes.get("/details", auth, getUserDetails);
+userRoutes.get("/complaints", getComplaints);
 
 module.exports = userRoutes;

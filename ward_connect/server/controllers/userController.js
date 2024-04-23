@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const PersonalDetails = require("../models/personal_details");
+const Complaint = require("../models/complaint");
 
 const getUserDetails = async (req, res) => {
   try {
@@ -25,4 +26,14 @@ const getUserDetails = async (req, res) => {
   }
 };
 
-module.exports = { getUserDetails };
+const getComplaints = async (req, res) => {
+  try {
+    const complaintdetails = await Complaint.find({ usId: req.header("user") });
+    res.json(complaintdetails);
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = { getUserDetails,getComplaints };
