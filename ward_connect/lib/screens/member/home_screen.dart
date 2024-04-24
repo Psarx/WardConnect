@@ -475,7 +475,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SchemeApp()),
+                                builder: (context) => MViewCertificates()),
                           );
                         },
                         style: ButtonStyle(
