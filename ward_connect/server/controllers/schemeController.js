@@ -41,11 +41,12 @@ async function addScheme(sid, sdetails, stype) {
 async function getApplicationsByUsidAndSid(req, res) {
   const usId = req.headers['usid'];
   const sid = req.headers['sid'];
-
+  console.log(usId);
+  console.log(sid);
   try {
     const applications = await Application.findOne({ usId, sid });
     console.log(applications);
-    res.json(applications);
+    res.status(200).json(applications);
   } catch (error) {
     console.error('Error fetching applications:', error);
     res.status(500).json({ error: 'Internal server error' });

@@ -96,11 +96,7 @@ class _AppliedUsersScreenState extends State<AppliedUsersScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ApplicationFormScreen(
-                                usid: 'apId',
-                                sid: 'sid',
-                              ),
-                            ),
+                                builder: (context) => ApplicationFormPage()),
                           ); // Store scheme ID in shared preferences
                           // Handle the button press
                           // For example, navigate to a form screen

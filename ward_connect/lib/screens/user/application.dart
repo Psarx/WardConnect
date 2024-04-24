@@ -524,7 +524,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                         'residentOfPanchayath': _residentOfPanchayath,
                         'reasonsForPriority':
                             _reasonsForPriorityController.text,
-                        'landOwnedDetails': {
+                        'landOwned': {
                           'village': _villageController.text,
                           'surveyNumber': _surveyNumberController.text,
                           'area': _areaController.text
@@ -541,7 +541,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                           'vehicle': _vehicleChecked,
                           'others': _otherssChecked
                         },
-                        'ownHouseDetails': {
+                        'houseDetails': {
                           'ownHouse': _ownHouse,
                           'areaOfHouse': _areaOfHouseController.text,
                           'roofing': _roofing,
@@ -549,7 +549,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
                           'floor': _floor,
                           'hasToilet': _hasToilet
                         },
-                        'beneficiaryDetails': {
+                        'previousBeneficiaries': {
                           'hasbeneficiary': _beneficiary,
                           'nameOfBeneficiary': _beneficiaryNameController.text,
                           'benefitReceived': _benefitReceivedController.text,
