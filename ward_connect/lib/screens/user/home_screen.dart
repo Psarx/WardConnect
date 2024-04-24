@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void logout() {
     // Implement logout functionality here
     // For example, you can clear user session, remove tokens, etc.
-    // After logout, navigate to the sign-in page
+    // After logout, navigate to the sign-in pagec
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),
