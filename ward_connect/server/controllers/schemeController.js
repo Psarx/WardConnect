@@ -53,4 +53,5 @@ async function getApplicationsByUsidAndSid(req, res) {
   }
 }
 
+
 module.exports = { getSchemesByStype,getApplicationsByUsidAndSid, addScheme, getAppliedUsersBySid };

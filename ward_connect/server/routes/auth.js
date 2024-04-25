@@ -199,5 +199,34 @@ authRouter.put('/api/certificates/approve/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+authRouter.put('/api/auth/applications/:action/:usId/:sid', async (req, res) => {
+  const { action, usId, sid } = req.params;
 
+  try {
+    let updateStatus;
+    if (action === 'approve') {
+      updateStatus = 'Approved';
+    } else if (action === 'reject') {
+      updateStatus = 'Rejected';
+    } else {
+      return res.status(400).json({ message: 'Invalid action' });
+    }
+
+    // Find the application by usId and sid and update its status
+    const updatedApplication = await Application.findOneAndUpdate(
+      { usId, sid },
+      { status: updateStatus },
+      { new: true }
+    );
+
+    if (!updatedApplication) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+
+    res.status(200).json(updatedApplication);
+  } catch (error) {
+    console.error(`Error ${action}ing application:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 module.exports = authRouter;

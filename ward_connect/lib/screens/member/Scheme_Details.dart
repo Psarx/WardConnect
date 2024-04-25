@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ward_connect/screens/member/user_details.dart';
+import 'package:ward_connect/screens/member/user_form.dart';
 
 class AppliedUsersScreen extends StatefulWidget {
   final String sid;
@@ -87,6 +87,13 @@ class _AppliedUsersScreenState extends State<AppliedUsersScreen> {
                       style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 16),
+                    Text(
+                      'Application status: ${appliedUser['status']}',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 8),
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
