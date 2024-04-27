@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ward_connect/screens/user/Status.dart';
 
 class ApplicationFormPage extends StatefulWidget {
   @override
@@ -119,7 +120,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
   }
 
   // Method to fetch application form data from the API
-  void fetchApplicationForm() async {
+  Future<void> fetchApplicationForm() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? apId = prefs.getString('apId');
     String? schemeId = prefs.getString('schemeId');
@@ -203,6 +204,27 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
       }
     } else {
       print('apId or schemeId is null');
+    }
+  }
+
+  Future<void> approveScheme() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? apId = prefs.getString('apId');
+      String? schemeId = prefs.getString('schemeId');
+      final response = await http.put(
+        Uri.parse(
+            'http://localhost:8080/api/certificates/approve/$apId/$schemeId'),
+      );
+
+      if (response.statusCode == 200) {
+        // If the request is successful, fetch the updated list of certificates
+        await fetchApplicationForm();
+      } else {
+        throw Exception('Failed to approve certificate');
+      }
+    } catch (e) {
+      print('Error approving certificate: $e');
     }
   }
 
@@ -394,6 +416,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
                               isButtonClicked = true;
                               isApproved = true;
                             });
+                            approveScheme();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Application Approved'),

@@ -10,6 +10,7 @@ class SchemeDetailsPage extends StatefulWidget {
 class _SchemeDetailsPageState extends State<SchemeDetailsPage> {
   final TextEditingController sidController = TextEditingController();
   final TextEditingController detailsController = TextEditingController();
+  final TextEditingController typeController = TextEditingController();
 
   //final DatabaseService databaseService = DatabaseService();
 
@@ -18,7 +19,8 @@ class _SchemeDetailsPageState extends State<SchemeDetailsPage> {
     Scheme scheme = Scheme(
       sid: sidController.text,
       sdetails: detailsController.text,
-      stype: 'YourDefaultType', // You may change this as per your requirements
+      stype:
+          typeController.text, // You may change this as per your requirements
     );
 
     // Save the Scheme object to the database
@@ -27,6 +29,14 @@ class _SchemeDetailsPageState extends State<SchemeDetailsPage> {
     // Clear text fields after submission
     sidController.clear();
     detailsController.clear();
+    typeController.clear();
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Scheme submitted successfully!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 
   @override
@@ -52,7 +62,7 @@ class _SchemeDetailsPageState extends State<SchemeDetailsPage> {
             ),
             SizedBox(height: 16.0),
             TextField(
-              controller: detailsController,
+              controller: typeController,
               decoration: InputDecoration(labelText: 'Scheme Type'),
             ),
             SizedBox(height: 16.0),
