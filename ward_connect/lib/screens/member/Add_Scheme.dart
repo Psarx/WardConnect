@@ -1,6 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ward_connect/services/auth_services.dart'; // Import your database service
-import 'package:ward_connect/models/scheme.dart'; // Import your Scheme model
+import 'package:http/http.dart' as http; // Import the http package
 
 class SchemeDetailsPage extends StatefulWidget {
   @override
@@ -12,31 +12,51 @@ class _SchemeDetailsPageState extends State<SchemeDetailsPage> {
   final TextEditingController detailsController = TextEditingController();
   final TextEditingController typeController = TextEditingController();
 
-  //final DatabaseService databaseService = DatabaseService();
+  Future<void> submitSchemeDetails() async {
+    // Create a map representing the scheme data
+    final Map<String, String> schemeData = {
+      'sid': sidController.text,
+      'sdetails': detailsController.text,
+      'stype': typeController.text,
+    };
 
-  void submitSchemeDetails() {
-    // Create a Scheme object with the entered data
-    Scheme scheme = Scheme(
-      sid: sidController.text,
-      sdetails: detailsController.text,
-      stype:
-          typeController.text, // You may change this as per your requirements
-    );
+    try {
+      // Send a POST request to the backend API endpoint
+      final response = await http.post(
+        Uri.parse('http://localhost:8080/api/auth/schemes/add'),
+        body: jsonEncode(schemeData), // Encode the scheme data as JSON
+        headers: <String, String>{
+          'Content-Type': 'application/json', // Set the request headers
+        },
+      );
 
-    // Save the Scheme object to the database
-    //databaseService.saveScheme(scheme);
-
-    // Clear text fields after submission
-    sidController.clear();
-    detailsController.clear();
-    typeController.clear();
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Scheme submitted successfully!'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+      // Check the response status code
+      if (response.statusCode == 201) {
+        // Clear text fields after successful submission
+        sidController.clear();
+        detailsController.clear();
+        typeController.clear();
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Scheme submitted successfully!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        // Handle errors if the request fails
+        throw Exception('Failed to submit scheme: ${response.body}');
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      print('Error submitting scheme: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error submitting scheme. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
