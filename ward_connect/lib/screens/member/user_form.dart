@@ -207,14 +207,14 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
     }
   }
 
-  Future<void> approveScheme() async {
+  Future<void> approveScheme(String action) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? apId = prefs.getString('apId');
       String? schemeId = prefs.getString('schemeId');
       final response = await http.put(
         Uri.parse(
-            'http://localhost:8080/api/certificates/approve/$apId/$schemeId'),
+            'http://localhost:8080/api/certificates/$action/$apId/$schemeId'),
       );
 
       if (response.statusCode == 200) {
@@ -416,7 +416,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
                               isButtonClicked = true;
                               isApproved = true;
                             });
-                            approveScheme();
+                            approveScheme('approve');
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Application Approved'),
@@ -436,6 +436,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
                               isButtonClicked = true;
                               isRejected = true;
                             });
+                            approveScheme('approve');
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Application Rejected'),
