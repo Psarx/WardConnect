@@ -174,6 +174,8 @@ class AuthService {
     required String details,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String usId = prefs.getString('user') ?? '';
       CertificateofTestimony cot = CertificateofTestimony(
         appliname: appliname,
         phone: phone,
@@ -185,6 +187,7 @@ class AuthService {
         body: cot.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          'usId': usId,
         },
       );
 
