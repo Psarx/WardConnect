@@ -210,11 +210,15 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
   Future<void> approveScheme(String action) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? apId = prefs.getString('apId');
+      String? usId = prefs.getString('apId');
       String? schemeId = prefs.getString('schemeId');
+      // final response = await http.put(
+      //   Uri.parse(
+      //       'http://localhost:8080/api/certificates/${action}/${apId}/${schemeId}'),
+      // );
       final response = await http.put(
         Uri.parse(
-            'http://localhost:8080/api/certificates/$action/$apId/$schemeId'),
+            'http://localhost:8080/api/certificates/$action/$usId/$schemeId'),
       );
 
       if (response.statusCode == 200) {
